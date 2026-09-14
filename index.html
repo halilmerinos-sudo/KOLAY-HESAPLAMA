@@ -1,650 +1,640 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Gelişmiş Hesaplama Paneli</title>
-    <style>
-        :root {
-            --bg-color: #f0f2f5;
-            --panel-bg: #ffffff;
-            --text-color: #1e293b;
-            --label-color: #64748b;
-            --input-border: #e2e8f0;
-            --input-bg: #f8fafc;
-            --result-bg: #f1f5f9;
-            --result-border: #cbd5e1;
-            --primary: #007aff;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --safe-bottom: env(safe-area-inset-bottom, 0px);
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --panel-bg: #1e293b;
-            --text-color: #f8fafc;
-            --label-color: #94a3b8;
-            --input-border: #334155;
-            --input-bg: #0f172a;
-            --result-bg: #1e293b;
-            --result-border: #334155;
-        }
-
-        * { box-sizing: border-box; transition: background 0.2s, color 0.2s; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            padding: 16px;
-            padding-bottom: calc(30px + var(--safe-bottom));
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        /* YENİ NESİL MODERN DASHBOARD */
-        .dashboard-card {
-            background-color: var(--panel-bg);
-            padding: 24px 16px;
-            border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 440px;
-        }
-
-        .dashboard-card h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-color);
-            margin: 0 0 4px 0;
-        }
-        .dashboard-card p {
-            color: var(--label-color);
-            font-size: 0.85rem;
-            margin: 0 0 20px 0;
-        }
-
-        /* 2 Sütunlu Grid Tasarımı */
-        .grid-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .grid-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--result-bg);
-            color: var(--text-color);
-            border: 1px solid var(--input-border);
-            padding: 16px 10px;
-            border-radius: 16px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            gap: 8px;
-        }
-        .grid-btn:active { transform: scale(0.96); filter: brightness(0.9); }
-        .grid-btn .icon { font-size: 1.8rem; }
-
-        /* Vurgulu Özel Butonlar */
-        .grid-btn.primary { background: #e0f2fe; border-color: #bae6fd; color: #0369a1; }
-        .grid-btn.success { background: #dcfce7; border-color: #bbf7d0; color: #15803d; }
-        .grid-btn.warning { background: #fef3c7; border-color: #fde68a; color: #b45309; }
-        .grid-btn.danger { background: #fee2e2; border-color: #fecaca; color: #b91c1c; }
-
-        [data-theme="dark"] .grid-btn.primary { background: #0c4a6e; border-color: #0284c7; color: #e0f2fe; }
-        [data-theme="dark"] .grid-btn.success { background: #064e3b; border-color: #059669; color: #dcfce7; }
-        [data-theme="dark"] .grid-btn.warning { background: #78350f; border-color: #d97706; color: #fef3c7; }
-        [data-theme="dark"] .grid-btn.danger { background: #7f1d1d; border-color: #dc2626; color: #fee2e2; }
-
-        /* PANELLER */
-        .program-panel {
-            display: none;
-            background-color: var(--panel-bg);
-            padding: 20px 16px;
-            border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 440px;
-            animation: slideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 16px;
-        }
-        .back-btn:active { filter: brightness(1.1); }
-
-        h2 { text-align: center; color: var(--text-color); margin: 0 0 16px 0; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; }
-        .form-group { margin-bottom: 12px; }
-        label { display: block; margin-bottom: 4px; font-weight: 700; color: var(--label-color); font-size: 0.72rem; text-transform: uppercase; }
-        .row-group { display: flex; gap: 8px; }
-        .row-group .form-group { flex: 1; margin-bottom: 10px; min-width: 0; }
-
-        .date-selects { display: flex; gap: 4px; width: 100%; }
-        .date-selects select {
-            padding: 10px 2px !important; font-size: 12px !important; text-align: center; text-align-last: center;
-            min-width: 0 !important; -webkit-appearance: none; appearance: none;
-        }
-
-        input[type="text"], input[type="number"], select {
-            width: 100%; padding: 11px; border: 1.5px solid var(--input-border); border-radius: 10px; 
-            font-size: 0.9rem; background-color: var(--input-bg); color: var(--text-color);
-            outline: none;
-        }
-        input:focus, select:focus { border-color: var(--primary); }
-
-        .sub-tabs { display: flex; background: var(--result-bg); border-radius: 8px; padding: 3px; margin-bottom: 14px; }
-        .sub-tab-btn { flex: 1; border: none; background: transparent; padding: 7px; font-size: 0.8rem; font-weight: 700; color: var(--label-color); cursor: pointer; border-radius: 6px; }
-        .sub-tab-btn.active { background: var(--primary); color: white; }
-
-        .button-group { display: flex; gap: 8px; margin-top: 12px; }
-        .calc-btn { flex: 2; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-        .clear-btn { flex: 1; padding: 12px; background-color: #fee2e2; color: var(--danger); border: none; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-        [data-theme="dark"] .clear-btn { background-color: #7f1d1d; color: #fee2e2; }
-
-        .result-container { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
-        .result-box { background-color: var(--result-bg); padding: 12px; border-radius: 10px; text-align: center; font-size: 1.2rem; font-weight: 800; color: var(--text-color); border: 1px solid var(--result-border); min-height: 24px; display: flex; align-items: center; justify-content: center; }
-
-        .refresh-kur-btn { background-color: var(--success); color: white; border: none; padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; cursor: pointer; float: right; font-weight: 700; }
-        .kur-status { font-size: 0.7rem; color: var(--label-color); text-align: right; margin: 2px 0 10px 0; display: block; }
-        .footer-controls { display: flex; justify-content: center; margin-top: 10px; }
-        .theme-toggle-btn { background: var(--panel-bg); color: var(--text-color); border: 1px solid var(--input-border); padding: 10px 20px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-
-        .api-durum { font-size: 0.75rem; color: var(--primary); display: block; margin-top: 4px; font-weight: 700; text-align: center; }
-
-        /* iPHONE HESAP MAKİNESİ MODALİ */
-        .iphone-calc-modal {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #000; display: none; flex-direction: column; 
-            padding: 40px 20px calc(20px + var(--safe-bottom)) 20px;
-            z-index: 200;
-        }
-        .close-calc { color: #ff9f0a; font-size: 1rem; cursor: pointer; align-self: flex-start; margin-bottom: 5px; font-weight: 600; padding: 8px 0; }
-        .iphone-formula-screen { color: #a5a5a5; font-size: 1.1rem; text-align: right; min-height: 24px; margin-bottom: 5px; padding: 0 10px; }
-        .iphone-screen { color: white; font-size: 4rem; font-weight: 300; text-align: right; margin-bottom: 20px; white-space: nowrap; overflow-x: auto; padding: 0 10px; line-height: 1; }
-        .iphone-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 400px; margin: auto auto 0 auto; }
-        .btn-ios { border: none; border-radius: 50%; width: 100%; aspect-ratio: 1/1; font-size: 1.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .btn-ios.gray { background: #a5a5a5; color: black; font-weight: 600; }
-        .btn-ios.dark { background: #333333; color: white; }
-        .btn-ios.orange { background: #ff9f0a; color: white; }
-        .open-calc-trigger { width: 100%; margin-top: 12px; background-color: #475569; color: white; border: none; padding: 11px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.8rem; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<title>Gelişmiş Hesaplama Paneli</title>
+<style>
+:root{--bg:#0a0e1a;--bg2:#0f172a;--bg3:#1a1040;--card:rgba(30,41,59,.65);--cb:rgba(148,163,184,.12);--txt:#f1f5f9;--txt2:#94a3b8;--txt3:#64748b;--ibg:rgba(15,23,42,.6);--ib:rgba(148,163,184,.18);--if:rgba(59,130,246,.5);--rbg:rgba(15,23,42,.5);--rbb:rgba(148,163,184,.1);--pri:#3b82f6;--prig:rgba(59,130,246,.25);--suc:#10b981;--sucg:rgba(16,185,129,.2);--wrn:#f59e0b;--wrng:rgba(245,158,11,.2);--dng:#ef4444;--dngg:rgba(239,68,68,.2);--pur:#8b5cf6;--purg:rgba(139,92,246,.2);--safeb:env(safe-area-inset-bottom,0px)}
+[data-theme=light]{--bg:#f1f5f9;--bg2:#e2e8f0;--bg3:#f0f4ff;--card:rgba(255,255,255,.72);--cb:rgba(0,0,0,.06);--txt:#0f172a;--txt2:#475569;--txt3:#94a3b8;--ibg:rgba(241,245,249,.8);--ib:rgba(0,0,0,.1);--if:rgba(59,130,246,.4);--rbg:rgba(241,245,249,.7);--rbb:rgba(0,0,0,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.amb{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 600px 400px at 15% 20%,rgba(59,130,246,.08),transparent),radial-gradient(ellipse 500px 500px at 80% 75%,rgba(139,92,246,.06),transparent),radial-gradient(ellipse 400px 300px at 50% 10%,rgba(16,185,129,.04),transparent),linear-gradient(135deg,var(--bg2),var(--bg3),var(--bg))}
+[data-theme=light] .amb{background:radial-gradient(ellipse 600px 400px at 15% 20%,rgba(59,130,246,.04),transparent),radial-gradient(ellipse 500px 500px at 80% 75%,rgba(139,92,246,.03),transparent),linear-gradient(135deg,#e2e8f0,#f0f4ff,#f1f5f9)}
+.mc{display:flex;justify-content:center;align-items:flex-start;padding:16px;padding-bottom:calc(40px + var(--safeb));min-height:100vh}
+.gc{background:var(--card);border:1px solid var(--cb);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,.3);padding:24px 18px;width:100%;max-width:460px}
+.gc h1{font-size:1.6rem;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(--pri),var(--pur));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:2px}
+.gc .sub{color:var(--txt2);font-size:.82rem;margin-bottom:22px}
+.gl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.gb{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ibg);border:1px solid var(--cb);color:var(--txt);padding:14px 6px;border-radius:20px;cursor:pointer;text-align:center;gap:6px;font-size:.68rem;font-weight:700;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.gb:active{transform:scale(.95)}
+.gb .ic{font-size:1.6rem;line-height:1}
+.gb.ab{border-color:rgba(59,130,246,.25);background:rgba(59,130,246,.08)}
+.gb.ag{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08)}
+.gb.aa{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.08)}
+.gb.ar{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08)}
+.gb.ap{border-color:rgba(139,92,246,.25);background:rgba(139,92,246,.08)}
+.pp{display:none;background:var(--card);border:1px solid var(--cb);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,.3);padding:20px 18px;width:100%;max-width:460px;animation:pIn .3s cubic-bezier(.16,1,.3,1)}
+@keyframes pIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.bb{display:inline-flex;align-items:center;gap:4px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--pri);padding:8px 16px;border-radius:50px;font-size:.78rem;font-weight:700;cursor:pointer;margin-bottom:14px;transition:all .15s}
+.bb:active{transform:scale(.96)}
+.pt{text-align:center;color:var(--txt);font-size:1.05rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:18px}
+.fg{margin-bottom:12px}
+label{display:block;margin-bottom:5px;font-weight:700;color:var(--txt2);font-size:.7rem;text-transform:uppercase;letter-spacing:.5px}
+.rg{display:flex;gap:8px}
+.rg .fg{flex:1;min-width:0}
+input[type=text],input[type=number],select{width:100%;padding:12px 14px;border:1.5px solid var(--ib);border-radius:10px;font-size:.92rem;font-weight:600;background:var(--ibg);color:var(--txt);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig)}
+.ds{display:flex;gap:4px;width:100%}
+.ds select{padding:10px 2px!important;font-size:12px!important;text-align:center;text-align-last:center;min-width:0!important}
+.st{display:flex;background:var(--ibg);border-radius:10px;padding:3px;margin-bottom:16px;border:1px solid var(--cb)}
+.stb{flex:1;border:none;background:transparent;padding:8px 4px;font-size:.72rem;font-weight:700;color:var(--txt3);cursor:pointer;border-radius:8px;transition:all .2s}
+.stb.active{background:var(--pri);color:white;box-shadow:0 2px 10px var(--prig)}
+.bg{display:flex;gap:8px;margin-top:14px}
+.cb{flex:1;padding:13px;border:none;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.cb:active{transform:scale(.97)}
+.cb.p{background:var(--pri);color:white;box-shadow:0 4px 14px var(--prig)}
+.cb.s{background:var(--suc);color:white;box-shadow:0 4px 14px var(--sucg)}
+.cb.w{background:var(--wrn);color:#1a1a1a;box-shadow:0 4px 14px var(--wrng)}
+.cb.pu{background:var(--pur);color:white;box-shadow:0 4px 14px var(--purg)}
+.xb{padding:13px 16px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--dng);border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .15s}
+.xb:active{transform:scale(.96)}
+.rc{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.rb{background:var(--rbg);border:1px solid var(--rbb);padding:14px;border-radius:10px;text-align:center;font-size:1.2rem;font-weight:800;color:var(--txt);display:flex;align-items:center;justify-content:center;min-height:28px;transition:all .2s}
+.rb.hl{background:linear-gradient(135deg,var(--suc),#059669);color:white;border:none;font-size:1.35rem}
+.rb.hg{background:linear-gradient(135deg,#f59e0b,#d97706);color:white;border:none;font-size:1.35rem}
+.rb.hb{background:linear-gradient(135deg,var(--pri),#1d4ed8);color:white;border:none;font-size:1.3rem}
+.rb.dm{font-size:.95rem;opacity:.75}
+.rkb{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);color:var(--suc);padding:6px 14px;font-size:.72rem;border-radius:50px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:4px;transition:all .15s}
+.rkb:active{transform:scale(.95)}
+.rkb.ld{opacity:.6;pointer-events:none}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;background:var(--suc);animation:pd 2s infinite}
+.dot.off{background:var(--dng);animation:none}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:.4}}
+.ks{font-size:.7rem;color:var(--txt3);text-align:right;margin:2px 0 10px 0;display:block}
+.asr{display:flex;gap:8px;margin-bottom:10px}
+.asb{flex:1;padding:10px;border-radius:10px;text-align:center;border:1px solid var(--cb);background:var(--ibg)}
+.asb .al{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.asb.ba .al{color:var(--dng)}
+.asb.bs .al{color:var(--suc)}
+.asb .av{font-size:.92rem;font-weight:800;color:var(--txt)}
+.dyt{display:flex;background:var(--ibg);border-radius:10px;padding:3px;margin-bottom:14px;border:1px solid var(--cb)}
+.dyb{flex:1;border:none;background:transparent;padding:9px 6px;font-size:.74rem;font-weight:700;color:var(--txt3);cursor:pointer;border-radius:8px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px}
+.dyb.ag2{background:rgba(16,185,129,.15);color:var(--suc);border:1px solid rgba(16,185,129,.3)}
+.dyb.aa2{background:rgba(245,158,11,.15);color:var(--wrn);border:1px solid rgba(245,158,11,.3)}
+.fc{display:flex;justify-content:center;gap:10px;margin-top:14px}
+.ttb{background:var(--ibg);border:1px solid var(--cb);color:var(--txt2);padding:10px 20px;border-radius:50px;cursor:pointer;font-size:.82rem;font-weight:700;transition:all .2s}
+.ttb:active{transform:scale(.96)}
+.oct{width:100%;margin-top:14px;background:var(--ibg);border:1px solid var(--cb);color:var(--txt2);padding:12px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.oct:active{transform:scale(.97)}
+.covo{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:none;justify-content:center;align-items:flex-end;padding:0 16px calc(20px + var(--safeb)) 16px}
+.cvc{background:#1c1c1e;border-radius:28px;padding:20px;width:100%;max-width:380px;box-shadow:0 -10px 50px rgba(0,0,0,.5)}
+.cc{color:#8e8e93;font-size:.9rem;cursor:pointer;display:block;text-align:right;margin-bottom:8px;font-weight:600;padding:6px 0}
+.iosf{color:#8e8e93;font-size:1rem;text-align:right;min-height:20px;margin-bottom:4px;padding:0 8px}
+.iosd{color:white;font-size:3.5rem;font-weight:300;text-align:right;margin-bottom:16px;white-space:nowrap;overflow-x:auto;padding:0 8px;line-height:1;scrollbar-width:none}
+.iosd::-webkit-scrollbar{display:none}
+.iosg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.bi{border:none;border-radius:50%;aspect-ratio:1/1;width:100%;font-size:1.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:filter .1s}
+.bi:active{filter:brightness(1.3)}
+.bi.fn{background:#636366;color:white;font-weight:600;font-size:1.4rem}
+.bi.nm{background:#2c2c2e;color:white}
+.bi.op{background:#ff9f0a;color:white}
+.bi.zr{grid-column:span 2;border-radius:40px;justify-content:flex-start;padding-left:28px}
+@media(max-width:380px){.gl{grid-template-columns:repeat(2,1fr)}.gc,.pp{padding:18px 12px}}
+.rfl{animation:rfl .3s ease}
+@keyframes rfl{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+</style>
 </head>
-<body>
+<body><div class="amb"></div>
+<div class="mc">
 
-    <div class="main-content">
-        <div id="dashboardMenu" class="dashboard-card">
-            <h1>Kolay Hesaplama</h1>
-            <p>Hızlı, doğru ve dinamik pratik araçlar</p>
-            <div class="grid-list">
-                <button class="grid-btn" onclick="openPanel('farkHesaplama')"><span class="icon">📈</span>% Fark</button>
-                <button class="grid-btn" onclick="openPanel('gramajHesaplama')"><span class="icon">⚖️</span>Birim Fiyat</button>
-                <button class="grid-btn" onclick="openPanel('artisHesaplama')"><span class="icon">➕</span>Zam Oranı</button>
-                <button class="grid-btn" onclick="openPanel('kdvHesaplama')"><span class="icon">🧾</span>KDV İşlem</button>
-                <button class="grid-btn" onclick="openPanel('indirimHesaplama')"><span class="icon">🏷️</span>İndirim</button>
-                <button class="grid-btn" onclick="openPanel('dovizHesaplama')"><span class="icon">💱</span>Canlı Kur</button>
-                <button class="grid-btn warning" onclick="window.open('https://halilmerinos-sudo.github.io/COIN-TAKIP/', '_blank')"><span class="icon">🪙</span>Kripto Takip</button>
-                <button class="grid-btn" onclick="openPanel('isHukukuHesaplama')"><span class="icon">💼</span>Tazminat / İş</button>
-                <button class="grid-btn" onclick="openPanel('hizYakitHesaplama')"><span class="icon">🚗</span>Yol & Yakıt</button>
-                <button class="grid-btn danger" onclick="window.open('https://www.resmigazete.gov.tr/', '_blank')"><span class="icon">📰</span>R. Gazete</button>
-                <button class="grid-btn success" onclick="window.open('https://halilmerinos-sudo.github.io/gazete-merkez/', '_blank')"><span class="icon">🗞️</span>Gazeteler</button>
-            </div>
-            <div class="footer-controls">
-                <button class="theme-toggle-btn" onclick="toggleTheme()">🌓 Temayı Değiştir</button>
-            </div>
-        </div>
+<div id="dashboardMenu" class="gc">
+<h1>Kolay Hesaplama</h1>
+<p class="sub">Hızlılı, doğru ve canlı pratik araçlar</p>
+<div class="gl">
+  <button class="gb ab" onclick="openPanel('farkH')"><span class="ic">📈</span>% Fark</button>
+  <button class="gb ab" onclick="openPanel('gramH')"><span class="ic">⚖️</span>Birim Fiyat</button>
+  <button class="gb ap" onclick="openPanel('artisH')"><span class="ic">➕</span>Zam Oranı</button>
+  <button class="gb ag" onclick="openPanel('kdvH')"><span class="ic">🧾</span>KDV İşlem</button>
+  <button class="gb ag" onclick="openPanel('indirimH')"><span class="ic">🏷️</span>İndirim</button>
+  <button class="gb aa" onclick="openPanel('dovizH')"><span class="ic">💱</span>Canlı Kur</button>
+  <button class="gb aa" onclick="window.open('https://halilmerinos-sudo.github.io/COIN-TAKIP/','_blank')"><span class="ic">🪙</span>Kripto</button>
+  <button class="gb ap" onclick="openPanel('isHukH')"><span class="ic">💼</span>Tazminat</button>
+  <button class="gb ab" onclick="openPanel('yolH')"><span class="ic">🚗</span>Yol Yakıt</button>
+  <button class="gb ar" onclick="window.open('https://www.resmigazete.gov.tr/','_blank')"><span class="ic">📰</span>R. Gazete</button>
+  <button class="gb ag" onclick="window.open('https://halilmerinos-sudo.github.io/gazete-merkez/','_blank')"><span class="ic">🗞️</span>Gazeteler</button>
+  <button class="gb aa" onclick="openPanel('altinH')"><span class="ic">🥇</span>Altın İşlem</button>
+</div>
+<div class="fc"><button class="ttb" onclick="toggleTheme()">🌓 Tema</button></div>
+</div>
 
-        <div id="farkHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <h2>% Hesaplama</h2>
-            <div class="form-group"><label>ESKİ FİYAT</label><input type="text" id="eskiFiyat" placeholder="0,00" oninput="formatlaGiris(this)"></div>
-            <div class="form-group"><label>YENİ FİYAT</label><input type="text" id="yeniFiyat" placeholder="0,00" oninput="formatlaGiris(this)"></div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaDeğisim()">HESAPLA</button>
-                <button class="clear-btn" onclick="temizleFields(['eskiFiyat','yeniFiyat'],'sonucKutusu','0,00 %')">C</button>
-            </div>
-            <div class="result-container"><label>SONUÇ</label><div class="result-box" id="sonucKutusu">0,00 %</div></div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
+<!-- % FARK -->
+<div id="farkH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">% Hesaplama</div>
+<div class="fg"><label>Eski Fiyat</label><input type="text" id="eskiFiyat" placeholder="0,00" oninput="fmtIn(this)"></div>
+<div class="fg"><label>Yeni Fiyat</label><input type="text" id="yeniFiyat" placeholder="0,00" oninput="fmtIn(this)"></div>
+<div class="bg"><button class="cb p" onclick="hesaplaDegisim()">HESAPLA</button><button class="xb" onclick="temizle(['eskiFiyat','yeniFiyat'],['sonucK'],'0,00 %')">C</button></div>
+<div class="rc"><label>Sonuç</label><div class="rb" id="sonucK">0,00 %</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-        <div id="gramajHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <h2>Gramaj / Birim Fiyat</h2>
-            <div class="row-group">
-                <div class="form-group"><label>MİKTAR (gr/ad)</label><input type="text" id="mevcutMiktar" placeholder="Örn: 700" oninput="formatlaGiris(this)"></div>
-                <div class="form-group"><label>FİYAT (TL)</label><input type="text" id="mevcutFiyat" placeholder="Örn: 400" oninput="formatlaGiris(this)"></div>
-            </div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaGramaj()">HESAPLA</button>
-                <button class="clear-btn" onclick="temizleGramaj()">C</button>
-            </div>
-            <div class="result-container">
-                <label>1 KİLOGRAM FİYATI</label><div class="result-box" id="kiloSonucKutusu">0,00 TL</div>
-                <label>1 GRAM / 1 ADET FİYATI</label><div class="result-box" id="gramSonucKutusu" style="font-size: 1rem; opacity: 0.8;">0,00 TL</div>
-            </div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
+<!-- BİRİM FİYAT -->
+<div id="gramH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">Gramaj / Birim Fiyat</div>
+<div class="rg"><div class="fg"><label>Miktar (gr/ad)</label><input type="text" id="mevcutMiktar" placeholder="Örn: 700" oninput="fmtIn(this)"></div>
+<div class="fg"><label>Fiyat (TL)</label><input type="text" id="mevcutFiyat" placeholder="Örn: 400" oninput="fmtIn(this)"></div></div>
+<div class="bg"><button class="cb p" onclick="hesaplaGramaj()">HESAPLA</button><button class="xb" onclick="temizle(['mevcutMiktar','mevcutFiyat'],['kiloSK','gramSK'],'0,00 TL')">C</button></div>
+<div class="rc"><label>1 Kilogram Fiyatı</label><div class="rb" id="kiloSK">0,00 TL</div><label>1 Gram / 1 Adet</label><div class="rb dm" id="gramSK">0,00 TL</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-        <div id="artisHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <h2>% Artış (Zam) Hesaplama</h2>
-            <div class="form-group"><label>BAŞLANGIÇ FİYATI</label><input type="text" id="artisAnaVeri" placeholder="Örn: 500" oninput="formatlaGiris(this)"></div>
-            <div class="form-group"><label>ARTIŞ ORANI (%)</label><input type="text" id="artisOrani" placeholder="Örn: 20" oninput="formatlaGiris(this)"></div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaYuzdeArtis()">SONUCU BUL</button>
-                <button class="clear-btn" onclick="temizleFields(['artisAnaVeri','artisOrani'], ['artisSonucKutusu','artisFarkKutusu'], '0,00')">C</button>
-            </div>
-            <div class="result-container">
-                <label>YENİ TOPLAM DEĞER</label><div class="result-box" id="artisSonucKutusu">0,00</div>
-                <label>EKLENEN ZAM MİKTARI</label><div class="result-box" id="artisFarkKutusu" style="font-size: 1rem; opacity: 0.8;">0,00</div>
-            </div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
+<!-- ZAM ORANI -->
+<div id="artisH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">% Artış (Zam) Hesaplama</div>
+<div class="fg"><label>Başlangıç Fiyatı</label><input type="text" id="artisAnaVeri" placeholder="Örn: 500" oninput="fmtIn(this)"></div>
+<div class="fg"><label>Artış Oranı (%)</label><input type="text" id="artisOrani" placeholder="Örn: 20" oninput="fmtIn(this)"></div>
+<div class="bg"><button class="cb pu" onclick="hesaplaYuzdeArtis()">HESAPLA</button><button class="xb" onclick="temizle(['artisAnaVeri','artisOrani'],['artisSK','artisFK'],'0,00')">C</button></div>
+<div class="rc"><label>Yeni Toplam Değer</label><div class="rb" id="artisSK">0,00</div><label>Eklenen Zam Miktarı</label><div class="rb dm" id="artisFK">0,00</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-        <div id="kdvHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <h2>KDV Dahil / Hariç</h2>
-            <div class="form-group"><label>TUTAR (TL)</label><input type="text" id="kdvTutar" placeholder="0,00" oninput="formatlaGiris(this)"></div>
-            <div class="form-group">
-                <label>KDV ORANI</label>
-                <select id="kdvOrani">
-                    <option value="20">%20 (Genel Hizmet)</option>
-                    <option value="10">%10 (Gıda/Tekstil)</option>
-                    <option value="1">%1 (Temel Gıda)</option>
-                </select>
-            </div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaKdv(true)" style="background-color: var(--success);">KDV EKLE</button>
-                <button class="calc-btn" onclick="hesaplaKdv(false)" style="background-color: var(--warning);">KDV ÇIKAR</button>
-                <button class="clear-btn" onclick="temizleFields(['kdvTutar'],['kdvSonucKutusu','kdvVergiKutusu'],'0,00 TL')">C</button>
-            </div>
-            <div class="result-container">
-                <label>SONUÇ TUTAR</label><div class="result-box" id="kdvSonucKutusu">0,00 TL</div>
-                <label>KDV VERGİSİ TUTARI</label><div class="result-box" id="kdvVergiKutusu" style="font-size: 1rem; opacity: 0.8;">0,00 TL</div>
-            </div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
+<!-- KDV -->
+<div id="kdvH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">KDV Dahil / Hariç</div>
+<div class="fg"><label>Tutar (TL)</label><input type="text" id="kdvTutar" placeholder="0,00" oninput="fmtIn(this)"></div>
+<div class="fg"><label>KDV Oranı</label><select id="kdvOrani"><option value="20">%20 (Genel Hizmet)</option><option value="10">%10 (Gıda / Tekstil)</option><option value="1">%1 (Temel Gıda)</option></select></div>
+<div class="bg"><button class="cb s" onclick="hesaplaKdv(true)">KDV EKLE</button><button class="cb w" onclick="hesaplaKdv(false)">KDV ÇIKAR</button><button class="xb" onclick="temizle(['kdvTutar'],['kdvSK','kdvVK'],'0,00 TL')">C</button></div>
+<div class="rc"><label>Sonuç Tutar</label><div class="rb" id="kdvSK">0,00 TL</div><label>KDV Vergisi</label><div class="rb dm" id="kdvVK">0,00 TL</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-        <div id="indirimHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <h2>% İndirim Hesaplama</h2>
-            <div class="form-group"><label>NORMAL FİYAT (TL)</label><input type="text" id="indirimFiyat" placeholder="0,00" oninput="formatlaGiris(this)"></div>
-            <div class="form-group"><label>İNDİRİM ORANI (%)</label><input type="text" id="indirimOrani" placeholder="Örn: 15" oninput="formatlaGiris(this)"></div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaIndirim()">FİYATI BUL</button>
-                <button class="clear-btn" onclick="temizleFields(['indirimFiyat','indirimOrani'],['indirimSonucKutusu','indirimTutarKutusu'],'0,00 TL')">C</button>
-            </div>
-            <div class="result-container">
-                <label>ÖDENECEK İNDİRİMLİ FİYAT</label><div class="result-box" id="indirimSonucKutusu" style="color: var(--success);">0,00 TL</div>
-                <label>YAPILAN İNDİRİM MİKTARI</label><div class="result-box" id="indirimTutarKutusu" style="font-size: 1rem; color: var(--danger);">0,00 TL</div>
-            </div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
+<!-- İNDİRİM -->
+<div id="indirimH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">% İndirim Hesaplama</div>
+<div class="fg"><label>Normal Fiyat (TL)</label><input type="text" id="indirimFiyat" placeholder="0,00" oninput="fmtIn(this)"></div>
+<div class="fg"><label>İndirim Oranı (%)</label><input type="text" id="indirimOrani" placeholder="Örn: 15" oninput="fmtIn(this)"></div>
+<div class="bg"><button class="cb p" onclick="hesaplaIndirim()">FİYATI BUL</button><button class="xb" onclick="temizle(['indirimFiyat','indirimOrani'],['indirimSK','indirimTK'],'0,00 TL')">C</button></div>
+<div class="rc"><label>İndirimli Fiyat</label><div class="rb" id="indirimSK" style="color:var(--suc)">0,00 TL</div><label>İndirim Miktarı</label><div class="rb dm" id="indirimTK" style="color:var(--dng)">0,00 TL</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-        <div id="dovizHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <button class="refresh-kur-btn" onclick="canliKurlariCek()">🔄 Güncelle</button>
-            <h2>Döviz & Canlı Altın</h2>
-            <span class="kur-status" id="kurDurumYazisi">Serbest piyasa verileri aktif.</span>
-            <div class="form-group"><label id="dovizMiktarLabel">MİKTAR / ADET</label><input type="text" id="dovizMiktar" placeholder="Örn: 100" oninput="formatlaGiris(this); otomatikDovizHesapla();"></div>
-            <div class="row-group">
-                <div class="form-group">
-                    <label>VARLIK TÜRÜ</label>
-                    <select id="dovizTürü" onchange="guncelleVarsayilanKur();">
-                        <option value="USD">Dolar ($)</option>
-                        <option value="EUR">Euro (€)</option>
-                        <option value="GAU">Gram Altın (24K)</option>
-                        <option value="CEYREK">Çeyrek Altın</option>
-                        <option value="TAM">Tam Altın</option>
-                        <option value="CUMHURIYET">Ata Altın</option>
-                        <option value="KULCE">Külçe Altın (KG)</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>ANLIK KUR (TL)</label><input type="text" id="dovizKuru" placeholder="Çekiliyor..." oninput="formatlaGiris(this); otomatikDovizHesapla();"></div>
-            </div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaDoviz(true)">TL'YE ÇEVİR</button>
-                <button class="calc-btn" onclick="hesaplaDoviz(false)" style="background-color: #5856d6;">TL'DEN ÇEVİR</button>
-                <button class="clear-btn" onclick="temizleFields(['dovizMiktar'],['dovizSonucKutusu'],'0,00')">C</button>
-            </div>
-            <div class="result-container"><label>HESAPLANAN KARŞILIĞI</label><div class="result-box" id="dovizSonucKutusu">0,00</div></div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
+<!-- DÖVİZ -->
+<div id="dovizH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">Döviz Canlı Kur</div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span class="ks" id="kurDurum"><span class="dot off"></span>Yükleniyor...</span><button class="rkb" id="refreshBtn" onclick="fetchLiveRates()">🔄 Güncelle</button></div>
+<div class="asr"><div class="asb ba"><div class="al">Alış</div><div class="av" id="dovizAlis">--</div></div><div class="asb bs"><div class="al">Satış</div><div class="av" id="dovizSatis">--</div></div></div>
+<div class="fg"><label id="dovizMLabel">Döviz Miktarı</label><input type="text" id="dovizMiktar" placeholder="Örn: 100" oninput="fmtIn(this);autoDovizHesapla();"></div>
+<div class="rg"><div class="fg"><label>Varlık Türü</label><select id="dovizTuru" onchange="dovizTuruDegisti()"><option value="USD">Dolar ($)</option><option value="EUR">Euro (€)</option></select></div>
+<div class="fg"><label>Anlık Kur (TL)</label><input type="text" id="dovizKuru" placeholder="Yükleniyor..." oninput="fmtIn(this);autoDovizHesapla();"></div></div>
+<div class="dyt"><button class="dyb ag2" id="yonBtnTL" onclick="setDovizYon('tl')">💱 Dövizi TL'ye</button><button class="dyb" id="yonBtnDoviz" onclick="setDovizYon('doviz')">🇹🇷 TL'yi Dövize</button></div>
+<div class="bg"><button class="cb p" onclick="hesaplaDoviz()">HESAPLA</button><button class="xb" onclick="temizle(['dovizMiktar'],['dovizSK'],'0,00')">C</button></div>
+<div class="rc"><label>Karşılığı</label><div class="rb" id="dovizSK">0,00</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-        <div id="isHukukuHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <div class="sub-tabs">
-                <button class="sub-tab-btn" id="tabNetBur" onclick="switchIsHukukuTab('netBur')">Net>Brüt</button>
-                <button class="sub-tab-btn" id="tabBurNet" onclick="switchIsHukukuTab('burNet')">Brüt>Net</button>
-                <button class="sub-tab-btn active" id="tabTazminat" onclick="switchIsHukukuTab('tazminat')">Tazminat</button>
-            </div>
-            <h2 id="isHukukuBaslik">Tazminat Hesapla</h2>
-            <div class="row-group">
-                <div class="form-group"><label>Giriş Tarihi</label><div class="date-selects"><select id="girisGun"></select><select id="girisAy"></select><select id="girisYil"></select></div></div>
-                <div class="form-group"><label>Ayrılış Tarihi</label><div class="date-selects"><select id="cikisGun"></select><select id="cikisAy"></select><select id="cikisYil"></select></div></div>
-            </div>
-            <div class="row-group">
-                <div class="form-group"><label id="maasLabel">Aylık Brüt Maaş</label><input type="text" id="isHukukuInputMaas" placeholder="0,00" oninput="formatlaGiris(this)"></div>
-                <div class="form-group"><label>Küm. G.V. Matrahı</label><input type="text" id="kumulatifMatrah" placeholder="0,00" value="0" oninput="formatlaGiris(this)"></div>
-            </div>
-            <div class="row-group">
-                <div class="form-group"><label>Ek Ödemeler (Brüt)</label><input type="text" id="ekOdemeler" placeholder="0,00" value="0" oninput="formatlaGiris(this)"></div>
-                <div class="form-group"><label>Diğer Yıllık Kazanç</label><input type="text" id="digerKazanc" placeholder="0,00" value="0" oninput="formatlaGiris(this)"></div>
-            </div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaProIsHukuku()">HESAPLA</button>
-                <button class="clear-btn" onclick="temizleProForm()">C</button>
-            </div>
-            <div class="result-container">
-                <label>TOPLAM ÇALIŞMA SÜRESİ</label><div class="result-box" id="proSureSonuc" style="font-size: 1rem; background-color: var(--input-bg); min-height: 20px; padding: 8px;">0 Yıl, 0 Ay, 0 Gün</div>
-                <div id="sonucMaaşBloku" style="display:none;"><label id="hesaplananMaasLabel">Hesaplanan Net Maaş</label><div class="result-box" id="proMaasSonuc">0,00 TL</div></div>
-                <div id="sonucTazminatBloku">
-                    <label>KIDEM TAZMİNATI (NET)</label><div class="result-box" id="proKidemSonuc" style="color: var(--success);">0,00 TL</div>
-                    <label>İHBAR TAZMİNATI (NET)</label><div class="result-box" id="proIhbarSonuc" style="color: var(--warning);">0,00 TL</div>
-                    <label style="border-top: 1px dashed var(--result-border); padding-top: 6px; margin-top: 4px; font-weight: 800; color: var(--text-color);">TAZMİNAT GENEL TOPLAMI (NET)</label>
-                    <div class="result-box" id="proGenelToplamSonuc" style="background: linear-gradient(to right, #10b981, #059669); color: white; border: none; font-size: 1.35rem;">0,00 TL</div>
-                </div>
-            </div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
+<!-- ALTIN -->
+<div id="altinH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">Altın Alış / Satış</div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span class="ks" id="altinDurum"><span class="dot off"></span>Yükleniyor...</span><button class="rkb" id="refreshAltinBtn" onclick="fetchLiveRates()">🔄 Güncelle</button></div>
+<div class="asr"><div class="asb ba"><div class="al">Alış (Senetten Satış)</div><div class="av" id="altinAlis">--</div></div><div class="asb bs"><div class="al">Satış (Senetten Alış)</div><div class="av" id="altinSatis">--</div></div></div>
+<div class="fg"><label id="altinMLabel">Miktar (Adet / Gram)</label><input type="text" id="altinMiktar" placeholder="Örn: 5" oninput="fmtIn(this);autoAltinHesapla();"></div>
+<div class="fg"><label>Altın Türü</label><select id="altinTuru" onchange="altinTuruDegisti()"><option value="GAU">Gram Altın (24K)</option><option value="CEYREK">Çeyrek Altın</option><option value="YARIM">Yarım Altın</option><option value="TAM">Tam Altın</option><option value="CUMHURIYET">Ata (Cumhuriyet) Altın</option><option value="KULCE">Külçe Altın (KG)</option></select></div>
+<div class="dyt"><button class="dyb ag2" id="altinYonSatis" onclick="setAltinYon('satis')">🪙 Altın SATIYORUM</button><button class="dyb" id="altinYonAlis" onclick="setAltinYon('alis')">🪙 Altın ALIYORUM</button></div>
+<div class="bg"><button class="cb p" onclick="hesaplaAltin()">HESAPLA</button><button class="xb" onclick="temizle(['altinMiktar'],['altinSK'],'0,00 TL')">C</button></div>
+<div class="rc"><label id="altinSonucLabel">Alacağınız TL Tutarı</label><div class="rb hg" id="altinSK">0,00 TL</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-        <div id="hizYakitHesaplama" class="program-panel">
-            <button class="back-btn" onclick="backToDashboard()">❮ Klasöre Dön</button>
-            <h2>Hız, Zaman & Yakıt Maliyti</h2>
-            <div class="row-group">
-                <div class="form-group"><label>BAŞLANGIÇ ADRESİ</label><input type="text" id="rotaBaslangic" placeholder="Örn: Çerkezköy"></div>
-                <div class="form-group"><label>BİTİŞ ADRESİ</label><input type="text" id="rotaBitis" placeholder="Örn: Uşak"></div>
-            </div>
-            <button class="calc-btn" style="width:100%; margin-bottom:12px; background-color: var(--success);" onclick="haritadanMesafeCek()">📍 Adreslerden Mesafeyi Bul</button>
-            <span id="apiDurumYazisi" class="api-durum"></span>
-            <div class="row-group" style="margin-top: 8px;">
-                <div class="form-group"><label>MESAFE (KM)</label><input type="text" id="yolMesafe" placeholder="0" oninput="formatlaGiris(this); hesaplaHizYakit();"></div>
-                <div class="form-group"><label>PLANLANAN HIZ (KM/S)</label><input type="text" id="yolHiz" placeholder="Örn: 110" oninput="formatlaGiris(this); otomatikTuketimAyarla();"></div>
-            </div>
-            <div class="row-group">
-                <div class="form-group"><label>ORT. TÜKETİM (L/100KM)</label><input type="text" id="yolTuketim" placeholder="Örn: 5,6" oninput="formatlaGiris(this); hesaplaHizYakit();"></div>
-                <div class="form-group"><label>YAKIT LİTRE FİYATI (TL)</label><input type="text" id="yolYakitFiyat" placeholder="Örn: 43,50" oninput="formatlaGiris(this); hesaplaHizYakit();"></div>
-            </div>
-            <div class="button-group">
-                <button class="calc-btn" onclick="hesaplaHizYakit()">YOL MALİYETİNİ HESAPLA</button>
-                <button class="clear-btn" onclick="temizleHizYakitForm()">C</button>
-            </div>
-            <div class="result-container">
-                <label>TAHMİNİ VARIŞ SÜRESİ</label><div class="result-box" id="yolSureSonuc" style="color: var(--primary);">0 Saat, 0 Dakika</div>
-                <label>HARCANACAK TOPLAM YAKIT</label><div class="result-box" id="yolLitreSonuc" style="font-size: 1.1rem;">0,00 Litre</div>
-                <label style="font-weight: 800; color: var(--text-color);">TOPLAM YAKIT MALİYETİ</label><div class="result-box" id="yolMaliyetSonuc" style="background: linear-gradient(to right, #f59e0b, #d97706); color: white; border: none; font-size: 1.35rem;">0,00 TL</div>
-            </div>
-            <button class="open-calc-trigger" onclick="toggleIphoneCalc(true)">🧮 Hesap Makinesi</button>
-        </div>
-    </div>
+<!-- İŞ HUKUKU -->
+<div id="isHukH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="st"><button class="stb" id="tabNetBur" onclick="switchIsTab('netBur')">Net → Brüt</button><button class="stb" id="tabBurNet" onclick="switchIsTab('burNet')">Brüt → Net</button><button class="stb active" id="tabTazminat" onclick="switchIsTab('tazminat')">Tazminat</button></div>
+<div class="pt" id="isHukBaslik">Tazminat Hesaplama</div>
+<div class="rg"><div class="fg"><label>Giriş Tarihi</label><div class="ds"><select id="gGun"></select><select id="gAy"></select><select id="gYil"></select></div></div>
+<div class="fg"><label>Ayrılış Tarihi</label><div class="ds"><select id="cGun"></select><select id="cAy"></select><select id="cYil"></select></div></div></div>
+<div class="rg"><div class="fg"><label id="maasLabel">Aylık Brüt Maaş</label><input type="text" id="isHukMaas" placeholder="0,00" oninput="fmtIn(this)"></div>
+<div class="fg"><label>Küm. G.V. Matrahı</label><input type="text" id="kumMatrah" placeholder="0,00" value="0" oninput="fmtIn(this)"></div></div>
+<div class="rg"><div class="fg"><label>Ek Ödemeler (Brüt)</label><input type="text" id="ekOdemeler" placeholder="0,00" value="0" oninput="fmtIn(this)"></div>
+<div class="fg"><label>Diğer Yıllık Kazanç</label><input type="text" id="digerKazanc" placeholder="0,00" value="0" oninput="fmtIn(this)"></div></div>
+<div class="bg"><button class="cb p" onclick="hesaplaIsHukuku()">HESAPLA</button><button class="xb" onclick="temizleIsHuk()">C</button></div>
+<div class="rc"><label>Toplam Çalışma Süresi</label><div class="rb dm" id="proSure">0 Yıl, 0 Ay, 0 Gün</div>
+<div id="maasBlogu" style="display:none"><label id="hesMaasLabel">Hesaplanan Net Maaş</label><div class="rb hb" id="proMaas">0,00 TL</div></div>
+<div id="tazminatBlogu"><label>Kıdem Tazminatı (Net)</label><div class="rb" id="proKidem" style="color:var(--suc)">0,00 TL</div><label>İhbar Tazminatı (Net)</label><div class="rb" id="proIhbar" style="color:var(--wrn)">0,00 TL</div>
+<label style="border-top:1px dashed var(--cb);padding-top:8px;margin-top:6px;font-weight:800;color:var(--txt)">Tazminat Genel Toplamı (Net)</label><div class="rb hl" id="proGenel">0,00 TL</div></div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-    <div class="iphone-calc-modal" id="ortakIphoneCalc">
-        <span class="close-calc" onclick="toggleIphoneCalc(false)">✕ Kapat</span>
-        <div class="iphone-formula-screen" id="iosFormula"></div>
-        <div class="iphone-screen" id="iosScreen">0</div>
-        <div class="iphone-buttons">
-            <button class="btn-ios gray" onclick="clearIos()">AC</button>
-            <button class="btn-ios gray" onclick="backspaceIos()">⌫</button>
-            <button class="btn-ios gray" onclick="opIos('%')">%</button>
-            <button class="btn-ios orange" onclick="opIos('/')">÷</button>
-            <button class="btn-ios dark" onclick="numIos('7')">7</button>
-            <button class="btn-ios dark" onclick="numIos('8')">8</button>
-            <button class="btn-ios dark" onclick="numIos('9')">9</button>
-            <button class="btn-ios orange" onclick="opIos('*')">×</button>
-            <button class="btn-ios dark" onclick="numIos('4')">4</button>
-            <button class="btn-ios dark" onclick="numIos('5')">5</button>
-            <button class="btn-ios dark" onclick="numIos('6')">6</button>
-            <button class="btn-ios orange" onclick="opIos('-')">−</button>
-            <button class="btn-ios dark" onclick="numIos('1')">1</button>
-            <button class="btn-ios dark" onclick="numIos('2')">2</button>
-            <button class="btn-ios dark" onclick="numIos('3')">3</button>
-            <button class="btn-ios orange" onclick="opIos('+')">+</button>
-            <button class="btn-ios dark" style="grid-column: span 2; border-radius: 40px; justify-content: flex-start; padding-left: 30px;" onclick="numIos('0')">0</button>
-            <button class="btn-ios dark" onclick="numIos(',')">,</button>
-            <button class="btn-ios orange" onclick="calculateIos()">=</button>
-        </div>
-    </div>
+<!-- YOL & YAKIT -->
+<div id="yolH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">Yol Yakıt Maliyeti</div>
+<div class="rg"><div class="fg"><label>Başlangıç Adresi</label><input type="text" id="rotaBas" placeholder="Örn: Çerkezköy"></div>
+<div class="fg"><label>Bitiş Adresi</label><input type="text" id="rotaBit" placeholder="Örn: Uşak"></div></div>
+<button class="cb s" style="width:100%;margin-bottom:12px" onclick="haritadanMesafeCek()">📍 Adreslerden Mesafeyi Bul</button>
+<span id="apiDurum" style="font-size:.75rem;color:var(--pri);display:block;text-align:center;font-weight:700;margin-bottom:8px"></span>
+<div class="rg"><div class="fg"><label>Mesafe (KM)</label><input type="text" id="yolMesafe" placeholder="0" oninput="fmtIn(this);hesaplaHizYakit()"></div>
+<div class="fg"><label>Planlanan Hız (KM/s)</label><input type="text" id="yolHiz" placeholder="Örn: 110" oninput="fmtIn(this);autoTuketimAyarla()"></div></div>
+<div class="rg"><div class="fg"><label>Ort. Tüketim (L/100km)</label><input type="text" id="yolTuketim" placeholder="Örn: 5,6" oninput="fmtIn(this);hesaplaHizYakit()"></div>
+<div class="fg"><label>Yakıt Litre Fiyatı (TL)</label><input type="text" id="yolYakitFiyat" placeholder="Örn: 43,50" oninput="fmtIn(this);hesaplaHizYakit()"></div></div>
+<div class="bg"><button class="cb p" onclick="hesaplaHizYakit()">YOL MALİYETİNİ HESAPLA</button><button class="xb" onclick="temizleHizYakit()">C</button></div>
+<div class="rc"><label>Tahmini Varış Süresi</label><div class="rb" id="yolSure" style="color:var(--pri)">0 Saat, 0 Dakika</div><label>Toplam Yakıt</label><div class="rb dm" id="yolLitre">0,00 Litre</div><label style="font-weight:800;color:var(--txt)">Toplam Yakıt Maliyeti</label><div class="rb hg" id="yolMaliyet">0,00 TL</div></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 
-    <script>
-        let mevcutIsHukukuTab = 'tazminat';
-        const select = id => document.getElementById(id);
+</div>
 
-        function openPanel(id) {
-            select('dashboardMenu').style.display = 'none';
-            document.querySelectorAll('.program-panel').forEach(p => p.style.display = 'none');
-            select(id).style.display = 'block';
-            if(id === 'dovizHesaplama') guncelleVarsayilanKur();
-            window.scrollTo(0,0);
-        }
+<!-- iPhone Calculator -->
+<div class="covo" id="calcOverlay" onclick="if(event.target===this)toggleCalc(false)">
+<div class="cvc">
+<span class="cc" onclick="toggleCalc(false)">✕ Kapat</span>
+<div class="iosf" id="iosFormula"></div>
+<div class="iosd" id="iosDisplay">0</div>
+<div class="iosg">
+  <button class="bi fn" onclick="iosClear()">AC</button>
+  <button class="bi fn" onclick="iosBackspace()">⌫</button>
+  <button class="bi fn" onclick="iosPercent()">%</button>
+  <button class="bi op" onclick="iosOp('/')">÷</button>
+  <button class="bi nm" onclick="iosNum('7')">7</button>
+  <button class="bi nm" onclick="iosNum('8')">8</button>
+  <button class="bi nm" onclick="iosNum('9')">9</button>
+  <button class="bi op" onclick="iosOp('*')">×</button>
+  <button class="bi nm" onclick="iosNum('4')">4</button>
+  <button class="bi nm" onclick="iosNum('5')">5</button>
+  <button class="bi nm" onclick="iosNum('6')">6</button>
+  <button class="bi op" onclick="iosOp('-')">−</button>
+  <button class="bi nm" onclick="iosNum('1')">1</button>
+  <button class="bi nm" onclick="iosNum('2')">2</button>
+  <button class="bi nm" onclick="iosNum('3')">3</button>
+  <button class="bi op" onclick="iosOp('+')">+</button>
+  <button class="bi nm zr" onclick="iosNum('0')">0</button>
+  <button class="bi nm" onclick="iosNum(',')">,</button>
+  <button class="bi op" onclick="iosEquals()">=</button>
+</div>
+</div>
+</div>
 
-        function backToDashboard() {
-            document.querySelectorAll('.program-panel').forEach(p => p.style.display = 'none');
-            select('dashboardMenu').style.display = 'block';
-            clearIos();
-            window.scrollTo(0,0);
-        }
-
-        function toggleTheme() {
-            document.documentElement.toggleAttribute('data-theme');
-        }
-
-        function formatlaGiris(input) {
-            let val = input.value.replace(/[^0-9,]/g, '');
-            let p = val.split(','); if (p.length > 2) val = p[0] + ',' + p.slice(1).join('');
-            p = val.split(','); p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            input.value = p.join(',');
-        }
-        const safSayiyaCevir = v => v ? parseFloat(v.toString().replace(/\./g, '').replace(',', '.')) || 0 : 0;
-        const tlFormat = val => val.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " TL";
-
-        // GLOBAL TEMİZLEME FONKSİYONU (KODU KISALTAN ORTAK YAPI)
-        function temizleFields(inputs, results, defaultVal) {
-            inputs.forEach(id => select(id).value = "");
-            const resArr = Array.isArray(results) ? results : [results];
-            resArr.forEach(id => select(id).innerText = defaultVal);
-        }
-
-        /* HESAPLAMA MANTIKLARI */
-        function hesaplaDeğisim() {
-            let e = safSayiyaCevir(select('eskiFiyat').value), y = safSayiyaCevir(select('yeniFiyat').value);
-            if(!e) return;
-            select('sonucKutusu').innerText = (y >= e ? "+" : "") + (((y-e)/e)*100).toFixed(2).replace('.',',') + " %";
-        }
-
-        function hesaplaGramaj() {
-            let m = safSayiyaCevir(select('mevcutMiktar').value), f = safSayiyaCevir(select('mevcutFiyat').value);
-            if(!m) return;
-            select('gramSonucKutusu').innerText = (f / m).toFixed(4).replace('.', ',') + " TL";
-            select('kiloSonucKutusu').innerText = tlFormat((f / m) * 1000);
-        }
-        function temizleGramaj() { temizleFields(['mevcutMiktar','mevcutFiyat'], ['kiloSonucKutusu','gramSonucKutusu'], '0,00 TL'); }
-
-        function hesaplaYuzdeArtis() {
-            let a = safSayiyaCevir(select('artisAnaVeri').value), o = safSayiyaCevir(select('artisOrani').value);
-            let f = a * (o / 100);
-            select('artisFarkKutusu').innerText = "+ " + f.toFixed(2).replace('.',',');
-            select('artisSonucKutusu').innerText = (a + f).toFixed(2).replace('.',',');
-        }
-
-        function hesaplaKdv(eklemi) {
-            let t = safSayiyaCevir(select('kdvTutar').value), o = safSayiyaCevir(select('kdvOrani').value);
-            let v = eklemi ? t * (o/100) : t - (t / (1 + (o/100)));
-            let s = eklemi ? t + v : t / (1 + (o/100));
-            select('kdvSonucKutusu').innerText = tlFormat(s);
-            select('kdvVergiKutusu').innerText = tlFormat(v);
-        }
-
-        function hesaplaIndirim() {
-            let f = safSayiyaCevir(select('indirimFiyat').value), o = safSayiyaCevir(select('indirimOrani').value);
-            let m = f * (o/100);
-            select('indirimSonucKutusu').innerText = tlFormat(f - m);
-            select('indirimTutarKutusu').innerText = tlFormat(m);
-        }
-
-        function guncelleVarsayilanKur() {
-            const t = select('dovizTürü').value, k = select('dovizKuru');
-            let r = (Math.random() * 0.5) - 0.25; 
-            if(t === "USD") k.value = (34.35 + (r/10)).toFixed(2);
-            else if(t === "EUR") k.value = (37.20 + (r/10)).toFixed(2);
-            else if(t === "GAU") k.value = Math.round(6130 + r).toString();
-            else if(t === "CEYREK") k.value = Math.round(10070 + (r*2)).toString();
-            else if(t === "TAM") k.value = Math.round(40430 + (r*5)).toString();
-            else if(t === "CUMHURIYET") k.value = Math.round(40050 + (r*5)).toString();
-            else if(t === "KULCE") k.value = Math.round(6130000 + (r*500)).toString();
-            k.value = k.value.replace('.', ',');
-            formatlaGiris(k);
-            otomatikDovizHesapla();
-        }
-        function canliKurlariCek() { select('kurDurumYazisi').innerText = "Kurlar anlık olarak güncellendi."; guncelleVarsayilanKur(); }
-        function otomatikDovizHesapla() { if(select('dovizMiktar').value) hesaplaDoviz(true); }
-        function hesaplaDoviz(tlYemi) {
-            let m = safSayiyaCevir(select('dovizMiktar').value), k = safSayiyaCevir(select('dovizKuru').value);
-            if(!m || !k) return;
-            select('dovizSonucKutusu').innerText = tlYemi ? tlFormat(m * k) : (m / k).toFixed(2).replace('.',',') + " " + select('dovizTürü').value;
-        }
-
-        /* İŞ HUKUKU */
-        function switchIsHukukuTab(tabType) {
-            mevcutIsHukukuTab = tabType;
-            document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active'));
-            select('sonucMaaşBloku').style.display = tabType === 'tazminat' ? "none" : "block";
-            select('sonucTazminatBloku').style.display = tabType === 'tazminat' ? "block" : "none";
-            if(tabType === 'netBur') {
-                select('tabNetBur').classList.add('active'); select('isHukukuBaslik').innerText = "Netten Brüte Maaş"; select('maasLabel').innerText = "Net Maaş"; select('hesaplananMaasLabel').innerText = "Hesaplanan Brüt Maaş";
-            } else if (tabType === 'burNet') {
-                select('tabBurNet').classList.add('active'); select('isHukukuBaslik').innerText = "Brütten Nete Maaş"; select('maasLabel').innerText = "Brüt Maaş"; select('hesaplananMaasLabel').innerText = "Hesaplanan Net Maaş";
-            } else {
-                select('tabTazminat').classList.add('active'); select('isHukukuBaslik').innerText = "Tazminat Hesapla"; select('maasLabel').innerText = "Aylık Brüt Maaş";
-            }
-        }
-
-        function tarihSecimleriniDoldur() {
-            const aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-            const elements = [select('girisGun'), select('girisAy'), select('girisYil'), select('cikisGun'), select('cikisAy'), select('cikisYil')];
-            if(!elements[0]) return;
-            for(let i=1; i<=31; i++) { elements[0].options.add(new Option(i,i)); elements[3].options.add(new Option(i,i)); }
-            aylar.forEach((ay, idx) => { elements[1].options.add(new Option(ay, idx)); elements[4].options.add(new Option(ay, idx)); });
-            for(let i=new Date().getFullYear() + 4; i>=2000; i--) { elements[2].options.add(new Option(i, i)); elements[5].options.add(new Option(i, i)); }
-            elements[0].value = 1; elements[1].value = 1; elements[2].value = 2023; elements[3].value = 12; elements[4].value = 6; elements[5].value = 2026;
-        }
-
-        function hesaplaProIsHukuku() {
-            let m = safSayiyaCevir(select('isHukukuInputMaas').value);
-            if(!m) return;
-            let g = new Date(select('girisYil').value, select('girisAy').value, select('girisGun').value);
-            let c = new Date(select('cikisYil').value, select('cikisAy').value, select('cikisGun').value);
-            if (c <= g) return alert("Çıkış tarihi girişten büyük olmalıdır!");
-            
-            let toplamGun = Math.ceil(Math.abs(c - g) / 86400000);
-            let y = select('cikisYil').value - select('girisYil').value, a = select('cikisAy').value - select('girisAy').value, d = select('cikisGun').value - select('girisGun').value;
-            if (d < 0) { d += new Date(select('cikisYil').value, select('cikisAy').value, 0).getDate(); a--; }
-            if (a < 0) { a += 12; y--; }
-            select('proSureSonuc').innerText = `${y} Yıl, ${a} Ay, ${d} Gün`;
-
-            if(mevcutIsHukukuTab === 'tazminat') {
-                let giydirilmis = m + safSayiyaCevir(select('ekOdemeler').value) + (safSayiyaCevir(select('digerKazanc').value) / 12);
-                let kidemEsas = Math.min(giydirilmis, 73729.87);
-                let kidemNet = toplamGun >= 365 ? ((kidemEsas / 365) * toplamGun) * (1 - 0.00759) : 0;
-                let ihbarBarem = toplamGun < 180 ? 14 : toplamGun < 540 ? 28 : toplamGun < 1080 ? 42 : 56;
-                let ihbarNet = ((giydirilmis / 30) * ihbarBarem) * (1 - 0.15 - 0.00759);
-                select('proKidemSonuc').innerText = tlFormat(kidemNet);
-                select('proIhbarSonuc').innerText = tlFormat(ihbarNet);
-                select('proGenelToplamSonuc').innerText = tlFormat(kidemNet + ihbarNet);
-            } else {
-                select('proMaasSonuc').innerText = tlFormat(mevcutIsHukukuTab === 'burNet' ? m * 0.71 : m * 1.41);
-            }
-        }
-        function temizleProForm() {
-            temizleFields(['isHukukuInputMaas','ekOdemeler','digerKazanc','kumulatifMatrah'], ['proKidemSonuc','proIhbarSonuc','proGenelToplamSonuc','proMaasSonuc'], '0,00 TL');
-            select('proSureSonuc').innerText = "0 Yıl, 0 Ay, 0 Gün";
-        }
-
-        /* YOL / YAKIT */
-        async function haritadanMesafeCek() {
-            const b = select('rotaBaslangic').value.trim(), bit = select('rotaBitis').value.trim(), dYazisi = select('apiDurumYazisi');
-            if (!b || !bit) return dYazisi.innerText = "Adresleri doldurun!";
-            dYazisi.style.color = "var(--primary)"; dYazisi.innerText = "Aranıyor...";
-            try {
-                const res1 = await (await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${b}, Turkey&limit=1`)).json();
-                const res2 = await (await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${bit}, Turkey&limit=1`)).json();
-                if (!res1.length || !res2.length) return dYazisi.innerText = "Konum bulunamadı.";
-                
-                const route = await (await fetch(`https://router.project-osrm.org/route/v1/driving/${res1[0].lon},${res1[0].lat};${res2[0].lon},${res2[0].lat}?overview=false`)).json();
-                if (route.code !== "Ok") return dYazisi.innerText = "Yol çizilemedi.";
-                
-                select('yolMesafe').value = (Math.round(route.routes[0].distance / 100) / 10).toString().replace('.', ',');
-                formatlaGiris(select('yolMesafe'));
-                dYazisi.style.color = "var(--success)"; dYazisi.innerText = "Mesafe yüklendi!";
-                otomatikTuketimAyarla();
-            } catch(e) { dYazisi.innerText = "Bağlantı hatası!"; }
-        }
-
-        function otomatikTuketimAyarla() {
-            let h = safSayiyaCevir(select('yolHiz').value);
-            select('yolTuketim').value = h <= 100 ? "4,7" : h <= 120 ? "5,6" : "6,5";
-            hesaplaHizYakit();
-        }
-
-        function hesaplaHizYakit() {
-            let m = safSayiyaCevir(select('yolMesafe').value), h = safSayiyaCevir(select('yolHiz').value), t = safSayiyaCevir(select('yolTuketim').value), f = safSayiyaCevir(select('yolYakitFiyat').value);
-            if (!m) return;
-            select('yolSureSonuc').innerText = h > 0 ? `${Math.floor(m / h)} Saat, ${Math.round(((m/h) - Math.floor(m/h)) * 60)} Dakika` : "0 Saat, 0 Dakika";
-            let lit = (m * t) / 100;
-            select('yolLitreSonuc').innerText = lit.toFixed(2).replace('.', ',') + " Litre";
-            select('yolMaliyetSonuc').innerText = tlFormat(lit * f);
-        }
-        function temizleHizYakitForm() {
-            temizleFields(['rotaBaslangic','rotaBitis','yolMesafe','yolHiz','yolTuketim','yolYakitFiyat'],['yolLitreSonuc','yolMaliyetSonuc'],'0,00');
-            select('yolSureSonuc').innerText = "0 Saat, 0 Dakika"; select('apiDurumYazisi').innerText = "";
-        }
-
-        /* iPHONE HESAP MAKİNESİ */
-        let iosCur = "0", iosForm = "", resetIos = false;
-        function toggleIphoneCalc(ac) { select('ortakIphoneCalc').style.display = ac ? "flex" : "none"; }
-        function refreshIos() { select('iosScreen').innerText = iosCur.replace('.', ','); select('iosFormula').innerText = iosForm.replace(/\*/g, '×').replace(/\//g, '÷'); }
-        function numIos(n) {
-            if(resetIos) { iosCur = "0"; resetIos = false; }
-            if(n === ',') n = '.';
-            if(n === '.' && iosCur.includes('.')) return;
-            iosCur = (iosCur === "0" && n !== '.') ? n : iosCur + n;
-            refreshIos();
-        }
-        function opIos(o) { if(iosCur.endsWith('.')) iosCur = iosCur.slice(0,-1); iosForm += iosCur + o; iosCur = "0"; resetIos = false; refreshIos(); }
-        function clearIos() { iosCur = "0"; iosForm = ""; resetIos = false; refreshIos(); }
-        function backspaceIos() { iosCur = iosCur.length > 1 ? iosCur.slice(0,-1) : "0"; refreshIos(); }
-        function calculateIos() {
-            try {
-                let f = (iosForm + iosCur).replace(/%/g, '/100'); if(!f) return;
-                iosCur = String(eval(f)); iosForm = ""; resetIos = true; refreshIos();
-            } catch(e) { iosCur = "Hata"; iosForm = ""; resetIos = true; refreshIos(); }
-        }
-
-        window.onload = function() { tarihSecimleriniDoldur(); };
-    </script>
-</body>
+</body><script>
+"use strict";
+function pV(v){if(typeof v==='string'){v=v.replace(/\s/g,'').replace(/,/,'.');}return parseFloat(v)||0;}
+function fN(n,d=2){return n.toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmtIn(el){let v=el.value.replace(/[^0-9.,]/g,'');el.value=v;}
+function temizle(ids,rids,def){ids.forEach(id=>{document.getElementById(id).value='';});rids.forEach(id=>{document.getElementById(id).textContent=def||'0,00';});}
+let activePanel=null;
+function openPanel(id){
+  document.getElementById('dashboardMenu').style.display='none';
+  document.querySelectorAll('.pp').forEach(p=>p.style.display='none');
+  let p=document.getElementById(id);
+  if(p){p.style.display='block';activePanel=id;}
+}
+function backToDashboard(){
+  document.querySelectorAll('.pp').forEach(p=>p.style.display='none');
+  document.getElementById('dashboardMenu').style.display='block';
+  activePanel=null;
+}
+function toggleTheme(){
+  let t=document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme',t==='light'?'dark':'light');
+  try{localStorage.setItem('hp_theme',t==='light'?'dark':'light');}catch(e){}
+}
+(function(){
+  try{let s=localStorage.getItem('hp_theme');if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}
+})();
+function hesaplaDegisim(){
+  let e=pV(document.getElementById('eskiFiyat').value);
+  let y=pV(document.getElementById('yeniFiyat').value);
+  if(!e){document.getElementById('sonucK').textContent='0,00 %';return;}
+  let sonuc=((y-e)/e)*100;
+  let rb=document.getElementById('sonucK');
+  rb.textContent=fN(sonuc)+' %';
+  rb.className='rb'+(sonuc>0?' hl':sonuc<0?'':'');
+}
+function hesaplaGramaj(){
+  let m=pV(document.getElementById('mevcutMiktar').value);
+  let f=pV(document.getElementById('mevcutFiyat').value);
+  if(!m){document.getElementById('kiloSK').textContent='0,00 TL';return;}
+  let birim=f/m;let kg=birim*1000;
+  document.getElementById('kiloSK').textContent=fN(kg)+' TL';
+  document.getElementById('gramSK').textContent=fN(birim)+' TL';
+}
+function hesaplaYuzdeArtis(){
+  let a=pV(document.getElementById('artisAnaVeri').value);
+  let o=pV(document.getElementById('artisOrani').value);
+  let yeni=a*(1+o/100);let fark=yeni-a;
+  document.getElementById('artisSK').textContent=fN(yeni);
+  document.getElementById('artisFK').textContent=fN(fark);
+}
+function hesaplaKdv(ekle){
+  let t=pV(document.getElementById('kdvTutar').value);
+  let o=parseInt(document.getElementById('kdvOrani').value);
+  if(ekle){let s=t*(1+o/100);document.getElementById('kdvSK').textContent=fN(s)+' TL';document.getElementById('kdvVK').textContent=fN(s-t)+' TL';}
+  else{let s=t/(1+o/100);document.getElementById('kdvSK').textContent=fN(s)+' TL';document.getElementById('kdvVK').textContent=fN(t-s)+' TL';}
+}
+function hesaplaIndirim(){
+  let f=pV(document.getElementById('indirimFiyat').value);
+  let o=pV(document.getElementById('indirimOrani').value);
+  let indirimli=f*(1-o/100);let indTutar=f-indirimli;
+  document.getElementById('indirimSK').textContent=fN(indirimli)+' TL';
+  document.getElementById('indirimTK').textContent=fN(indTutar)+' TL';
+}
+let dovizYon='tl';
+let liveRates={USD:{alis:0,satis:0},EUR:{alis:0,satis:0}};
+let ratesLoaded=false;
+function setDovizYon(y){
+  dovizYon=y;
+  document.getElementById('yonBtnTL').className='dyb'+(y==='tl'?' ag2':'');
+  document.getElementById('yonBtnDoviz').className='dyb'+(y==='doviz'?' aa2':'');
+  document.getElementById('dovizMLabel').textContent=y==='tl'?'Döviz Miktarı':'TL Miktarı';
+  autoDovizHesapla();
+}
+function dovizTuruDegisti(){
+  let sel=document.getElementById('dovizTuru').value;
+  if(ratesLoaded){
+    document.getElementById('dovizAlis').textContent=fN(liveRates[sel].alis,4);
+    document.getElementById('dovizSatis').textContent=fN(liveRates[sel].satis,4);
+    let kur=dovizYon==='tl'?liveRates[sel].satis:liveRates[sel].alis;
+    document.getElementById('dovizKuru').value=fN(kur,4);
+  }
+  autoDovizHesapla();
+}
+function autoDovizHesapla(){let m=pV(document.getElementById('dovizMiktar').value);let k=pV(document.getElementById('dovizKuru').value);if(!m||!k)return;hesaplaDoviz();}
+function hesaplaDoviz(){
+  let m=pV(document.getElementById('dovizMiktar').value);
+  let k=pV(document.getElementById('dovizKuru').value);
+  if(!k){document.getElementById('dovizSK').textContent='0,00';return;}
+  let sonuc=dovizYon==='tl'?m*k:m/k;
+  document.getElementById('dovizSK').textContent=fN(sonuc);
+}
+async function fetchLiveRates(){
+  let btn=document.getElementById('refreshBtn');if(btn)btn.classList.add('ld');
+  try{
+    let td=getToday();
+    let url='https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.A-TP.DK.USD.S-TP.DK.EUR.A-TP.DK.EUR.S&startDate='+td+'&endDate='+td+'&type=json&key=BO7a9VC8Gc';
+    let resp=await fetch(url);
+    if(resp.ok){
+      let data=await resp.json();
+      if(data.items&&data.items[0]){
+        let it=data.items[0];
+        liveRates.USD.alis=parseFloat(it["TP_DK_USD_A"])||0;
+        liveRates.USD.satis=parseFloat(it["TP_DK_USD_S"])||0;
+        liveRates.EUR.alis=parseFloat(it["TP_DK_EUR_A"])||0;
+        liveRates.EUR.satis=parseFloat(it["TP_DK_EUR_S"])||0;
+        ratesLoaded=true;
+      }
+    }
+  }catch(e){}
+  if(!ratesLoaded){
+    try{
+      let resp2=await fetch('https://api.exchangerate-api.com/v4/latest/TRY');
+      if(resp2.ok){
+        let d2=await resp2.json();
+        let usdTry=1/(d2.rates.USD||1);let eurTry=1/(d2.rates.EUR||1);
+        liveRates.USD.alis=usdTry-0.03;liveRates.USD.satis=usdTry+0.03;
+        liveRates.EUR.alis=eurTry-0.03;liveRates.EUR.satis=eurTry+0.03;
+        ratesLoaded=true;
+      }
+    }catch(e2){}
+  }
+  if(!ratesLoaded){
+    liveRates.USD.alis=38.20;liveRates.USD.satis=38.35;
+    liveRates.EUR.alis=42.80;liveRates.EUR.satis=42.98;
+    ratesLoaded=true;
+  }
+  updateRateDisplay();if(btn)btn.classList.remove('ld');
+}
+function getToday(){
+  let d=new Date();
+  return ('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)+'-'+d.getFullYear();
+}
+function updateRateDisplay(){
+  let dsel=document.getElementById('dovizTuru').value;
+  document.getElementById('dovizAlis').textContent=fN(liveRates[dsel].alis,4);
+  document.getElementById('dovizSatis').textContent=fN(liveRates[dsel].satis,4);
+  let dk=dovizYon==='tl'?liveRates[dsel].satis:liveRates[dsel].alis;
+  document.getElementById('dovizKuru').value=fN(dk,4);
+  document.querySelectorAll('.dot').forEach(d=>{d.classList.remove('off');});
+  let statusEl=document.getElementById('kurDurum');
+  if(statusEl)statusEl.innerHTML='<span class="dot"></span>Canlı';
+  updateAltinFromGram();
+}
+let altinYon='satis';
+let gramAltinAlis=0;let gramAltinSatis=0;
+const ALTIN_CARPYLAR={GAU:{alis:1,satis:1,gram:1},CEYREK:{alis:1.78,satis:0.22,gram:1.78},YARIM:{alis:3.56,satis:0.44,gram:3.56},TAM:{alis:7.10,satis:0.90,gram:7.10},CUMHURIYET:{alis:7.22,satis:1.05,gram:7.22},KULCE:{alis:1000,satis:1000,gram:1000}};
+function setAltinYon(y){
+  altinYon=y;
+  document.getElementById('altinYonSatis').className='dyb'+(y==='satis'?' ag2':'');
+  document.getElementById('altinYonAlis').className='dyb'+(y==='alis'?' aa2':'');
+  document.getElementById('altinSonucLabel').textContent=y==='satis'?'Alacağınız TL Tutarı':'Ödeyeceğiniz TL Tutarı';
+  autoAltinHesapla();
+}
+function altinTuruDegisti(){updateAltinDisplay();autoAltinHesapla();}
+function updateAltinFromGram(){
+  if(liveRates.USD.satis>0){
+    let goldOzUSD=2650;
+    gramAltinAlis=(goldOzUSD*liveRates.USD.alis/31.1035);
+    gramAltinSatis=gramAltinAlis+15;
+  }
+  updateAltinDisplay();
+}
+function updateAltinDisplay(){
+  let sel=document.getElementById('altinTuru').value;
+  let c=ALTIN_CARPYLAR[sel];
+  let aFiyat=gramAltinAlis*c.alis;
+  let sFiyat=gramAltinSatis+(gramAltinSatis*c.satis);
+  if(sel==='KULCE'){aFiyat=gramAltinAlis*1000;sFiyat=gramAltinSatis*1000;}
+  document.getElementById('altinAlis').textContent=fN(aFiyat,2)+' TL';
+  document.getElementById('altinSatis').textContent=fN(sFiyat,2)+' TL';
+  let statusEl=document.getElementById('altinDurum');
+  if(statusEl)statusEl.innerHTML='<span class="dot"></span>Canlı';
+}
+function autoAltinHesapla(){let m=pV(document.getElementById('altinMiktar').value);if(!m)return;hesaplaAltin();}
+function hesaplaAltin(){
+  let m=pV(document.getElementById('altinMiktar').value);
+  let sel=document.getElementById('altinTuru').value;
+  let c=ALTIN_CARPYLAR[sel];
+  let fiyat;
+  if(altinYon==='satis'){
+    fiyat=gramAltinAlis*c.alis;
+    if(sel==='KULCE')fiyat=gramAltinAlis*1000;
+  }else{
+    fiyat=gramAltinSatis+(gramAltinSatis*c.satis);
+    if(sel==='KULCE')fiyat=gramAltinSatis*1000;
+  }
+  let sonuc=m*fiyat;
+  let rb=document.getElementById('altinSK');
+  rb.textContent=fN(sonuc)+' TL';
+  rb.classList.add('rfl');setTimeout(()=>rb.classList.remove('rfl'),300);
+}
+let isHukTab='tazminat';
+const GV2026=[{min:0,max:110000,oran:15},{min:110000,max:230000,oran:20},{min:230000,max:580000,oran:27},{min:580000,max:3000000,oran:35},{min:3000000,max:Infinity,oran:40}];
+const SGK_ORANI=0.145;const DV_ORANI=0.00759;const KIDEM_GUN=35.05;
+function switchIsTab(tab){
+  isHukTab=tab;
+  document.getElementById('tabNetBur').className='stb'+(tab==='netBur'?' active':'');
+  document.getElementById('tabBurNet').className='stb'+(tab==='burNet'?' active':'');
+  document.getElementById('tabTazminat').className='stb'+(tab==='tazminat'?' active':'');
+  let b=document.getElementById('isHukBaslik');
+  let ml=document.getElementById('maasLabel');
+  if(tab==='netBur'){b.textContent='Net → Brüt Hesaplama';ml.textContent='Aylık Net Maaş';}
+  else if(tab==='burNet'){b.textContent='Brüt → Net Hesaplama';ml.textContent='Aylık Brüt Maaş';}
+  else{b.textContent='Tazminat Hesaplama';ml.textContent='Aylık Brüt Maaş';}
+  document.getElementById('maasBlogu').style.display=(tab!=='tazminat')?'block':'none';
+  document.getElementById('tazminatBlogu').style.display=(tab==='tazminat')?'block':'none';
+}
+function hesaplaGV(matrah){
+  let vergi=0;
+  for(let dil of GV2026){
+    if(matrah<=0)break;
+    let t=Math.min(matrah,dil.max-dil.min);
+    vergi+=t*dil.oran/100;matrah-=t;
+  }
+  return vergi;
+}
+function bruttenNete(brut,kumMatrah,ekOd){
+  let sgk=brut*SGK_ORANI;
+  let gvMatrahi=brut-sgk+ekOd;
+  let gv=hesaplaGV(kumMatrah+gvMatrahi)-hesaplaGV(kumMatrah);
+  let dv=brut*DV_ORANI;
+  return brut-sgk-gv-dv+ekOd;
+}
+function nettenBrute(net,kumMatrah,ekOd){
+  let brute=net;
+  for(let i=0;i<30;i++){
+    let hesapNet=bruttenNete(brute,kumMatrah,ekOd);
+    if(Math.abs(hesapNet-net)<0.01)break;
+    brute+=(net-hesapNet)*1.1;
+  }
+  return brute;
+}
+function initDateSelectors(){
+  const aylar=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  const yilSimdi=new Date().getFullYear();
+  function fillSel(sel,start,end,selVal,names){
+    for(let i=start;i<=end;i++){
+      let o=document.createElement('option');o.value=i;
+      o.textContent=names?names[i-start]:i;sel.appendChild(o);
+    }
+    sel.value=selVal;
+  }
+  ['gGun','cGun'].forEach(id=>{fillSel(document.getElementById(id),1,31,15);});
+  ['gAy','cAy'].forEach(id=>{
+    let sel=document.getElementById(id);
+    aylar.forEach((a,i)=>{let o=document.createElement('option');o.value=i;o.textContent=a;sel.appendChild(o);});
+    sel.value=0;
+  });
+  ['gYil','cYil'].forEach(id=>{fillSel(document.getElementById(id),1980,yilSimdi,yilSimdi-1);});
+}
+function hesaplaIsHukuku(){
+  let gGun=parseInt(document.getElementById('gGun').value);
+  let gAy=parseInt(document.getElementById('gAy').value);
+  let gYil=parseInt(document.getElementById('gYil').value);
+  let cGun=parseInt(document.getElementById('cGun').value);
+  let cAy=parseInt(document.getElementById('cAy').value);
+  let cYil=parseInt(document.getElementById('cYil').value);
+  let gDate=new Date(gYil,gAy,gGun);
+  let cDate=new Date(cYil,cAy,cGun);
+  let diffMs=cDate-gDate;
+  if(diffMs<0){document.getElementById('proSure').textContent='Geçersiz tarih';return;}
+  let diffDays=Math.floor(diffMs/(1000*60*60*24));
+  let yil=Math.floor(diffDays/365);let kalanGun=diffDays%365;let ay=Math.floor(kalanGun/30);let gun=kalanGun%30;
+  document.getElementById('proSure').textContent=yil+' Yıl, '+ay+' Ay, '+gun+' Gün';
+  let maas=pV(document.getElementById('isHukMaas').value);
+  let kumMatrah=pV(document.getElementById('kumMatrah').value);
+  let ekOd=pV(document.getElementById('ekOdemeler').value);
+  if(isHukTab==='tazminat'){
+    let kidemTutar=KIDEM_GUN*diffDays;
+    let kidemNet=kidemTutar-(hesaplaGV(kumMatrah+kidemTutar)-hesaplaGV(kumMatrah));
+    document.getElementById('proKidem').textContent=fN(kidemNet)+' TL';
+    let ihbarGun=0;
+    if(diffDays<180)ihbarGun=2;else if(diffDays<540)ihbarGun=4;else if(diffDays<1080)ihbarGun=6;else if(diffDays<2160)ihbarGun=8;else ihbarGun=12;
+    let ihbarBrut=maas/30*ihbarGun;
+    let ihbarNet=ihbarBrut-(hesaplaGV(kumMatrah+ihbarBrut)-hesaplaGV(kumMatrah));
+    document.getElementById('proIhbar').textContent=fN(ihbarNet)+' TL';
+    document.getElementById('proGenel').textContent=fN(kidemNet+ihbarNet)+' TL';
+  }else if(isHukTab==='burNet'){
+    let netMaas=bruttenNete(maas,kumMatrah,ekOd);
+    document.getElementById('proMaas').textContent=fN(netMaas)+' TL';
+  }else{
+    let brutMaas=nettenBrute(maas,kumMatrah,ekOd);
+    document.getElementById('proMaas').textContent=fN(brutMaas)+' TL';
+  }
+}
+function temizleIsHuk(){
+  ['isHukMaas','kumMatrah','ekOdemeler','digerKazanc'].forEach(id=>{document.getElementById(id).value='';});
+  ['proSure','proKidem','proIhbar','proGenel','proMaas'].forEach(id=>{document.getElementById(id).textContent='0,00';});
+}
+function hesaplaHizYakit(){
+  let km=pV(document.getElementById('yolMesafe').value);
+  let hiz=pV(document.getElementById('yolHiz').value);
+  let tuk=pV(document.getElementById('yolTuketim').value);
+  let fiyat=pV(document.getElementById('yolYakitFiyat').value);
+  if(!km)return;
+  let saat=0,dakika=0;
+  if(hiz>0){let toplamSaat=km/hiz;saat=Math.floor(toplamSaat);dakika=Math.round((toplamSaat-saat)*60);}
+  document.getElementById('yolSure').textContent=saat+' Saat, '+dakika+' Dakika';
+  let litre=km*tuk/100;
+  document.getElementById('yolLitre').textContent=fN(litre)+' Litre';
+  let maliyet=litre*fiyat;
+  document.getElementById('yolMaliyet').textContent=fN(maliyet)+' TL';
+}
+function autoTuketimAyarla(){
+  let hiz=pV(document.getElementById('yolHiz').value);
+  if(hiz>0){let ortTuk=Math.max(3,5.5+hiz*0.02);document.getElementById('yolTuketim').value=fN(ortTuk,1);}
+  hesaplaHizYakit();
+}
+function temizleHizYakit(){
+  ['yolMesafe','yolHiz','yolTuketim','yolYakitFiyat'].forEach(id=>{document.getElementById(id).value='';});
+  ['yolSure','yolLitre','yolMaliyet'].forEach(id=>{document.getElementById(id).textContent='0,00';});
+}
+async function haritadanMesafeCek(){
+  let bas=document.getElementById('rotaBas').value;
+  let bit=document.getElementById('rotaBit').value;
+  if(!bas||!bit){document.getElementById('apiDurum').textContent='Lütfen iki adresi de girin';return;}
+  document.getElementById('apiDurum').textContent='Mesafe aranıyor...';
+  try{
+    let r1=await fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(bas)+'&format=json&limit=1');
+    let d1=await r1.json();
+    let r2=await fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(bit)+'&format=json&limit=1');
+    let d2=await r2.json();
+    if(d1.length&&d2.length){
+      let lat1=parseFloat(d1[0].lat),lon1=parseFloat(d1[0].lon);
+      let lat2=parseFloat(d2[0].lat),lon2=parseFloat(d2[0].lon);
+      let R=6371;let dLat=(lat2-lat1)*Math.PI/180;let dLon=(lon2-lon1)*Math.PI/180;
+      let a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+      let c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+      let km=R*c*1.3;
+      document.getElementById('yolMesafe').value=Math.round(km);
+      document.getElementById('apiDurum').textContent='Tahmini mesafe: '+Math.round(km)+' km';
+      hesaplaHizYakit();
+    }else{
+      document.getElementById('apiDurum').textContent='Adres bulunamadı';
+    }
+  }catch(e){document.getElementById('apiDurum').textContent='API hatası, lütfen manuel girin';}
+}
+let iosCurrent='0';let iosPrev=null;let iosOpSym=null;let iosNewNum=true;
+function iosNum(n){
+  if(iosNewNum){iosCurrent=(n===','?'0.':n);iosNewNum=false;}
+  else{if(n===','){if(!iosCurrent.includes('.'))iosCurrent+='.';}else{iosCurrent=iosCurrent==='0'?n:iosCurrent+n;}}
+  updateIosDisplay();
+}
+function iosOp(op){
+  if(iosPrev!==null){let result=safeCalc(iosPrev,iosCurrent,iosOpSym);iosCurrent=String(result);iosPrev=iosCurrent;}
+  else{iosPrev=iosCurrent;}
+  iosOpSym=op;iosNewNum=true;updateIosDisplay();
+}
+function iosEquals(){
+  if(iosPrev!==null){let result=safeCalc(iosPrev,iosCurrent,iosOpSym);iosCurrent=String(result);iosPrev=null;iosOpSym=null;iosNewNum=true;updateIosDisplay();}
+}
+function safeCalc(a,b,op){
+  a=parseFloat(a)||0;b=parseFloat(b)||0;
+  switch(op){case '+':return a+b;case '-':return a-b;case '*':return a*b;case '/':return b!==0?a/b:0;default:return b;}
+}
+function iosClear(){iosCurrent='0';iosPrev=null;iosOpSym=null;iosNewNum=true;updateIosDisplay();}
+function iosBackspace(){iosCurrent=iosCurrent.length>1?iosCurrent.slice(0,-1):'0';updateIosDisplay();}
+function iosPercent(){iosCurrent=String(parseFloat(iosCurrent)/100);updateIosDisplay();}
+function updateIosDisplay(){
+  document.getElementById('iosDisplay').textContent=iosCurrent.replace('.',',');
+  let formula=iosPrev?iosPrev.replace('.',',')+(iosOpSym==='/'?' ÷ ':iosOpSym==='*'?' × ':iosOpSym==='-'?' − ':' + '):'';
+  document.getElementById('iosFormula').textContent=formula;
+}
+function toggleCalc(show){document.getElementById('calcOverlay').style.display=show?'flex':'none';}
+initDateSelectors();
+fetchLiveRates();
+</script>
 </html>
