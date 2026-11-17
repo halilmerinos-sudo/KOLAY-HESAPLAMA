@@ -13,12 +13,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 [data-theme=light] .amb{background:radial-gradient(ellipse 600px 400px at 15% 20%,rgba(59,130,246,.04),transparent),radial-gradient(ellipse 500px 500px at 80% 75%,rgba(139,92,246,.03),transparent),linear-gradient(135deg,#e2e8f0,#f0f4ff,#f1f5f9)}
 .mc{display:flex;justify-content:center;align-items:flex-start;padding:16px;padding-bottom:calc(40px + var(--safeb));min-height:100vh}
 .gc{background:var(--card);border:1px solid var(--cb);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,.3);padding:24px 18px;width:100%;max-width:460px}
-.gc h1{font-size:1.6rem;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(--pri),var(--pur));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:2px}
-.gc .sub{color:var(--txt2);font-size:.82rem;margin-bottom:22px}
+.gc h1{font-size:1.95rem;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(--pri),var(--pur));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:2px}
+.gc .sub{color:var(--txt2);font-size:.95rem;margin-bottom:22px}
 .gl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.gb{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ibg);border:1px solid var(--cb);color:var(--txt);padding:14px 6px;border-radius:20px;cursor:pointer;text-align:center;gap:6px;font-size:.68rem;font-weight:700;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.gb{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ibg);border:1px solid var(--cb);color:var(--txt);padding:16px 6px;border-radius:20px;cursor:pointer;text-align:center;gap:7px;font-size:.82rem;line-height:1.15;font-weight:700;transition:all .2s;-webkit-tap-highlight-color:transparent}
 .gb:active{transform:scale(.95)}
-.gb .ic{font-size:1.6rem;line-height:1}
+.gb .ic{font-size:2.15rem;line-height:1}
 .gb.ab{border-color:rgba(59,130,246,.25);background:rgba(59,130,246,.08)}
 .gb.ag{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08)}
 .gb.aa{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.08)}
@@ -26,56 +26,56 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .gb.ap{border-color:rgba(139,92,246,.25);background:rgba(139,92,246,.08)}
 .pp{display:none;background:var(--card);border:1px solid var(--cb);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:28px;box-shadow:0 8px 32px rgba(0,0,0,.3);padding:20px 18px;width:100%;max-width:460px;animation:pIn .3s cubic-bezier(.16,1,.3,1)}
 @keyframes pIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.bb{display:inline-flex;align-items:center;gap:4px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--pri);padding:8px 16px;border-radius:50px;font-size:.78rem;font-weight:700;cursor:pointer;margin-bottom:14px;transition:all .15s}
+.bb{display:inline-flex;align-items:center;gap:4px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--pri);padding:9px 18px;border-radius:50px;font-size:.9rem;font-weight:700;cursor:pointer;margin-bottom:14px;transition:all .15s}
 .bb:active{transform:scale(.96)}
-.pt{text-align:center;color:var(--txt);font-size:1.05rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:18px}
+.pt{text-align:center;color:var(--txt);font-size:1.2rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:18px}
 .fg{margin-bottom:12px}
-label{display:block;margin-bottom:5px;font-weight:700;color:var(--txt2);font-size:.7rem;text-transform:uppercase;letter-spacing:.5px}
+label{display:block;margin-bottom:5px;font-weight:700;color:var(--txt2);font-size:.8rem;text-transform:uppercase;letter-spacing:.5px}
 .rg{display:flex;gap:8px}
 .rg .fg{flex:1;min-width:0}
-input[type=text],input[type=number],select{width:100%;padding:12px 14px;border:1.5px solid var(--ib);border-radius:10px;font-size:.92rem;font-weight:600;background:var(--ibg);color:var(--txt);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+input[type=text],input[type=number],select{width:100%;padding:13px 14px;border:1.5px solid var(--ib);border-radius:10px;font-size:1.02rem;font-weight:600;background:var(--ibg);color:var(--txt);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
 input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig)}
 .ds{display:flex;gap:4px;width:100%}
 .ds select{padding:10px 2px!important;font-size:12px!important;text-align:center;text-align-last:center;min-width:0!important}
 .st{display:flex;background:var(--ibg);border-radius:10px;padding:3px;margin-bottom:16px;border:1px solid var(--cb)}
-.stb{flex:1;border:none;background:transparent;padding:8px 4px;font-size:.72rem;font-weight:700;color:var(--txt3);cursor:pointer;border-radius:8px;transition:all .2s}
+.stb{flex:1;border:none;background:transparent;padding:9px 4px;font-size:.82rem;font-weight:700;color:var(--txt3);cursor:pointer;border-radius:8px;transition:all .2s}
 .stb.active{background:var(--pri);color:white;box-shadow:0 2px 10px var(--prig)}
 .bg{display:flex;gap:8px;margin-top:14px}
-.cb{flex:1;padding:13px;border:none;border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.cb{flex:1;padding:14px;border:none;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
 .cb:active{transform:scale(.97)}
 .cb.p{background:var(--pri);color:white;box-shadow:0 4px 14px var(--prig)}
 .cb.s{background:var(--suc);color:white;box-shadow:0 4px 14px var(--sucg)}
 .cb.w{background:var(--wrn);color:#1a1a1a;box-shadow:0 4px 14px var(--wrng)}
 .cb.pu{background:var(--pur);color:white;box-shadow:0 4px 14px var(--purg)}
-.xb{padding:13px 16px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--dng);border-radius:10px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .15s}
+.xb{padding:14px 16px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--dng);border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .15s}
 .xb:active{transform:scale(.96)}
 .rc{margin-top:14px;display:flex;flex-direction:column;gap:8px}
-.rb{background:var(--rbg);border:1px solid var(--rbb);padding:14px;border-radius:10px;text-align:center;font-size:1.2rem;font-weight:800;color:var(--txt);display:flex;align-items:center;justify-content:center;min-height:28px;transition:all .2s}
+.rb{background:var(--rbg);border:1px solid var(--rbb);padding:14px;border-radius:10px;text-align:center;font-size:1.32rem;font-weight:800;color:var(--txt);display:flex;align-items:center;justify-content:center;min-height:28px;transition:all .2s}
 .rb.hl{background:linear-gradient(135deg,var(--suc),#059669);color:white;border:none;font-size:1.35rem}
 .rb.hg{background:linear-gradient(135deg,#f59e0b,#d97706);color:white;border:none;font-size:1.35rem}
 .rb.hb{background:linear-gradient(135deg,var(--pri),#1d4ed8);color:white;border:none;font-size:1.3rem}
-.rb.dm{font-size:.95rem;opacity:.75}
+.rb.dm{font-size:1.05rem;opacity:.75}
 .rkb{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);color:var(--suc);padding:6px 14px;font-size:.72rem;border-radius:50px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:4px;transition:all .15s}
 .rkb:active{transform:scale(.95)}
 .rkb.ld{opacity:.6;pointer-events:none}
 .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;background:var(--suc);animation:pd 2s infinite}
 .dot.off{background:var(--dng);animation:none}
 @keyframes pd{0%,100%{opacity:1}50%{opacity:.4}}
-.ks{font-size:.7rem;color:var(--txt3);text-align:right;margin:2px 0 10px 0;display:block}
+.ks{font-size:.8rem;color:var(--txt3);text-align:right;margin:2px 0 10px 0;display:block}
 .asr{display:flex;gap:8px;margin-bottom:10px}
 .asb{flex:1;padding:10px;border-radius:10px;text-align:center;border:1px solid var(--cb);background:var(--ibg)}
-.asb .al{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.asb .al{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .asb.ba .al{color:var(--dng)}
 .asb.bs .al{color:var(--suc)}
-.asb .av{font-size:.92rem;font-weight:800;color:var(--txt)}
+.asb .av{font-size:1.05rem;font-weight:800;color:var(--txt)}
 .dyt{display:flex;background:var(--ibg);border-radius:10px;padding:3px;margin-bottom:14px;border:1px solid var(--cb)}
-.dyb{flex:1;border:none;background:transparent;padding:9px 6px;font-size:.74rem;font-weight:700;color:var(--txt3);cursor:pointer;border-radius:8px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px}
+.dyb{flex:1;border:none;background:transparent;padding:10px 6px;font-size:.85rem;font-weight:700;color:var(--txt3);cursor:pointer;border-radius:8px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px}
 .dyb.ag2{background:rgba(16,185,129,.15);color:var(--suc);border:1px solid rgba(16,185,129,.3)}
 .dyb.aa2{background:rgba(245,158,11,.15);color:var(--wrn);border:1px solid rgba(245,158,11,.3)}
 .fc{display:flex;justify-content:center;gap:10px;margin-top:14px}
-.ttb{background:var(--ibg);border:1px solid var(--cb);color:var(--txt2);padding:10px 20px;border-radius:50px;cursor:pointer;font-size:.82rem;font-weight:700;transition:all .2s}
+.ttb{background:var(--ibg);border:1px solid var(--cb);color:var(--txt2);padding:11px 22px;border-radius:50px;cursor:pointer;font-size:.95rem;font-weight:700;transition:all .2s}
 .ttb:active{transform:scale(.96)}
-.oct{width:100%;margin-top:14px;background:var(--ibg);border:1px solid var(--cb);color:var(--txt2);padding:12px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.oct{width:100%;margin-top:14px;background:var(--ibg);border:1px solid var(--cb);color:var(--txt2);padding:13px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
 .oct:active{transform:scale(.97)}
 .covo{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:none;justify-content:center;align-items:flex-end;padding:0 16px calc(20px + var(--safeb)) 16px}
 .cvc{background:#1c1c1e;border-radius:28px;padding:20px;width:100%;max-width:380px;box-shadow:0 -10px 50px rgba(0,0,0,.5)}
@@ -91,13 +91,19 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 .bi.op{background:#ff9f0a;color:white}
 .bi.zr{grid-column:span 2;border-radius:40px;justify-content:flex-start;padding-left:28px}
 @media(max-width:380px){.gl{grid-template-columns:repeat(2,1fr)}.gc,.pp{padding:18px 12px}}
+.fmb{width:100%;margin-top:10px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);color:var(--pur);padding:12px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.fmb:active{transform:scale(.97)}
+.fmx{display:none;margin-top:8px;background:rgba(139,92,246,.08);border:1px dashed rgba(139,92,246,.35);border-radius:10px;padding:12px 14px;color:var(--txt);font-size:.9rem;line-height:1.65}
+.fmx.show{display:block;animation:pIn .25s ease}
+.fmx b{color:var(--pur)}
+.fmx .fx{display:block;background:rgba(0,0,0,.25);border-radius:8px;padding:8px 10px;margin:6px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86rem;color:var(--txt);letter-spacing:.2px}
+.fmx .fo{color:var(--txt2);font-size:.8rem;margin-top:4px}
 .rfl{animation:rfl .3s ease}
 @keyframes rfl{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
 </style>
 </head>
 <body><div class="amb"></div>
 <div class="mc">
-
 <div id="dashboardMenu" class="gc">
 <h1>Kolay Hesaplama</h1>
 <p class="sub">Hızlılı, doğru ve canlı pratik araçlar</p>
@@ -126,6 +132,33 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 <div class="fg"><label>Yeni Fiyat</label><input type="text" id="yeniFiyat" placeholder="0,00" oninput="fmtIn(this)"></div>
 <div class="bg"><button class="cb p" onclick="hesaplaDegisim()">HESAPLA</button><button class="xb" onclick="temizle(['eskiFiyat','yeniFiyat'],['sonucK'],'0,00 %')">C</button></div>
 <div class="rc"><label>Sonuç</label><div class="rb" id="sonucK">0,00 %</div></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - % Fark</b><span class="fx">Değişim (%) = (Yeni − Eski) / Eski × 100</span><span class="fo">İki fiyat arasındaki artış veya azalış yüzdesi.</span><span class="fx">Örnek: (120 − 100) / 100 × 100 = %20</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - Birim / Gram Fiyat</b><span class="fx">1 Gram Fiyatı = Toplam Fiyat / Miktar</span><span class="fx">1 Kilogram Fiyatı = (Fiyat / Miktar) × 1000</span><span class="fx">Örnek: 400 TL / 700 gr = 0,5714 TL/gr → 571,43 TL/kg</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - % Artış (Zam)</b><span class="fx">Yeni Fiyat = Ana Fiyat × (1 + Oran / 100)</span><span class="fx">Zam Miktarı = Yeni Fiyat − Ana Fiyat</span><span class="fx">Örnek: 500 × 1,20 = 600 TL → zam 100 TL</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - KDV Ekle / Çıkar</b><span class="fx">KDV Ekle: Tutar × (1 + Oran / 100)</span><span class="fo">KDV hariç fiyattan KDV dahil fiyata.</span><span class="fx">KDV Çıkar: Tutar / (1 + Oran / 100)</span><span class="fo">KDV dahil fiyattan hariç fiyata.</span><span class="fx">KDV Tutarı = Sonuç − Giriş (eklemede), Giriş − Sonuç (çıkarmada)</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - % İndirim</b><span class="fx">İndirimli Fiyat = Fiyat × (1 − Oran / 100)</span><span class="fx">İndirim Miktarı = Fiyat − İndirimli Fiyat</span><span class="fx">Örnek: 200 TL %15 indirim → 170 TL (30 TL indirim)</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - Döviz Kuru</b><span class="fx">Döviz → TL: Sonuç = Miktar × Kur</span><span class="fo">Döviz miktarı ile kuru çarparsın.</span><span class="fx">TL → Döviz: Sonuç = Miktar / Kur</span><span class="fo">TL miktarını kura bölersin.</span><span class="fx">Kur = 1 birim yabancı paranın TL karşılığı</span><span class="fo">Dövizi TL ye çevirirken SATIŞ kuru kullanılır.</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - Altın Fiyatı</b><span class="fx">Has Gram (TL) = Ons ($) × Dolar Kuru / 31,1035</span><span class="fo">1 ons = 31,1035 gram.</span><span class="fx">Kuyumcu Alış = Has Gram × 0,99</span><span class="fo">Altınını satarken alacağın fiyat.</span><span class="fx">Kuyumcu Satış = Has Gram × 1,02</span><span class="fo">Altın alırken ödeyeceğin fiyat.</span><span class="fx">Adet Fiyatı = Gram Fiyatı × Has Gram Miktarı</span><span class="fo">Çeyrek 1,75 gr - Yarım 3,50 gr - Tam/Ata 7,00 gr.</span><span class="fx">Örnek: Ons 4100 $, kur 41,50 → Has 5470 TL → Çeyrek satış ≈ 9.765 TL</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - Maaş ve Tazminat</b><span class="fx">Brüt → Net: Net = Brüt − SGK(%15) − Gelir Vergisi − Damga(%0,759)</span><span class="fo">Gelir vergisi kümülatif matraha göre kademeli hesaplanır.</span><span class="fx">Net → Brüt: Net sonucu tutana kadar iteratif aranır</span><span class="fo">Yaklaşık %35 brüt/net oranından başlar.</span><span class="fx">Kıdem = Giydirilmiş Brüt / 30 × 35,05 × Yıl</span><span class="fo">Giydirilmiş brüt = maaş + ek ödemeler.</span><span class="fx">İhbar = Gün Sayısı (2/4/6/8/12) × Günlük Brüt</span><span class="fo">Kıdeme göre ihbar süresi belirlenir.</span></div>
+
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - Yol ve Yakıt</b><span class="fx">Süre (saat) = Mesafe / Ortalama Hız</span><span class="fx">Yakıt (Litre) = Mesafe × Tüketim / 100</span><span class="fo">Tüketim L/100km cinsindendir.</span><span class="fx">Maliyet = Litre × Litre Fiyatı</span><span class="fx">Örnek: 500 km × 6 L/100km = 30 L → 30 × 43,50 = 1.305 TL</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -172,7 +205,6 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 <div class="rc"><label>İndirimli Fiyat</label><div class="rb" id="indirimSK" style="color:var(--suc)">0,00 TL</div><label>İndirim Miktarı</label><div class="rb dm" id="indirimTK" style="color:var(--dng)">0,00 TL</div></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
-
 <!-- DÖVİZ -->
 <div id="dovizH" class="pp">
 <button class="bb" onclick="backToDashboard()">← Geri</button>
@@ -180,7 +212,7 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span class="ks" id="kurDurum"><span class="dot off"></span>Yükleniyor...</span><button class="rkb" id="refreshBtn" onclick="fetchLiveRates()">🔄 Güncelle</button></div>
 <div class="asr"><div class="asb ba"><div class="al">Alış</div><div class="av" id="dovizAlis">--</div></div><div class="asb bs"><div class="al">Satış</div><div class="av" id="dovizSatis">--</div></div></div>
 <div class="fg"><label id="dovizMLabel">Döviz Miktarı</label><input type="text" id="dovizMiktar" placeholder="Örn: 100" oninput="fmtIn(this);autoDovizHesapla();"></div>
-<div class="rg"><div class="fg"><label>Varlık Türü</label><select id="dovizTuru" onchange="dovizTuruDegisti()"><option value="USD">Dolar ($)</option><option value="EUR">Euro (€)</option></select></div>
+<div class="rg"><div class="fg"><label>Varlık Türü</label><select id="dovizTuru" onchange="dovizTuruDegisti()"><option value="USD">Dolar ($)</option><option value="EUR">Euro (€)</option><option value="GBP">Sterlin (£)</option></select></div>
 <div class="fg"><label>Anlık Kur (TL)</label><input type="text" id="dovizKuru" placeholder="Yükleniyor..." oninput="fmtIn(this);autoDovizHesapla();"></div></div>
 <div class="dyt"><button class="dyb ag2" id="yonBtnTL" onclick="setDovizYon('tl')">💱 Dövizi TL'ye</button><button class="dyb" id="yonBtnDoviz" onclick="setDovizYon('doviz')">🇹🇷 TL'yi Dövize</button></div>
 <div class="bg"><button class="cb p" onclick="hesaplaDoviz()">HESAPLA</button><button class="xb" onclick="temizle(['dovizMiktar'],['dovizSK'],'0,00')">C</button></div>
@@ -193,7 +225,7 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 <button class="bb" onclick="backToDashboard()">← Geri</button>
 <div class="pt">Altın Alış / Satış</div>
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span class="ks" id="altinDurum"><span class="dot off"></span>Yükleniyor...</span><button class="rkb" id="refreshAltinBtn" onclick="fetchLiveRates()">🔄 Güncelle</button></div>
-<div class="asr"><div class="asb ba"><div class="al">Alış (Senetten Satış)</div><div class="av" id="altinAlis">--</div></div><div class="asb bs"><div class="al">Satış (Senetten Alış)</div><div class="av" id="altinSatis">--</div></div></div>
+<div class="asr"><div class="asb ba"><div class="al">Alış</div><div class="av" id="altinAlis">--</div></div><div class="asb bs"><div class="al">Satış</div><div class="av" id="altinSatis">--</div></div></div>
 <div class="fg"><label id="altinMLabel">Miktar (Adet / Gram)</label><input type="text" id="altinMiktar" placeholder="Örn: 5" oninput="fmtIn(this);autoAltinHesapla();"></div>
 <div class="fg"><label>Altın Türü</label><select id="altinTuru" onchange="altinTuruDegisti()"><option value="GAU">Gram Altın (24K)</option><option value="CEYREK">Çeyrek Altın</option><option value="YARIM">Yarım Altın</option><option value="TAM">Tam Altın</option><option value="CUMHURIYET">Ata (Cumhuriyet) Altın</option><option value="KULCE">Külçe Altın (KG)</option></select></div>
 <div class="dyt"><button class="dyb ag2" id="altinYonSatis" onclick="setAltinYon('satis')">🪙 Altın SATIYORUM</button><button class="dyb" id="altinYonAlis" onclick="setAltinYon('alis')">🪙 Altın ALIYORUM</button></div>
@@ -270,10 +302,11 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 </div>
 </div>
 
-</body><script>
+</body>
+<script>
 "use strict";
-function pV(v){if(typeof v==='string'){v=v.replace(/\s/g,'').replace(/,/,'.');}return parseFloat(v)||0;}
-function fN(n,d=2){return n.toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function pV(v){if(typeof v==='string'){v=v.replace(/\s/g,'').replace(/\./g,'').replace(/,/,'.');}return parseFloat(v)||0;}
+function fN(n,d=2){return (isFinite(n)?n:0).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});}
 function fmtIn(el){let v=el.value.replace(/[^0-9.,]/g,'');el.value=v;}
 function temizle(ids,rids,def){ids.forEach(id=>{document.getElementById(id).value='';});rids.forEach(id=>{document.getElementById(id).textContent=def||'0,00';});}
 let activePanel=null;
@@ -282,6 +315,7 @@ function openPanel(id){
   document.querySelectorAll('.pp').forEach(p=>p.style.display='none');
   let p=document.getElementById(id);
   if(p){p.style.display='block';activePanel=id;}
+  if(!ratesLoaded)fetchLiveRates();
 }
 function backToDashboard(){
   document.querySelectorAll('.pp').forEach(p=>p.style.display='none');
@@ -303,7 +337,7 @@ function hesaplaDegisim(){
   let sonuc=((y-e)/e)*100;
   let rb=document.getElementById('sonucK');
   rb.textContent=fN(sonuc)+' %';
-  rb.className='rb'+(sonuc>0?' hl':sonuc<0?'':'');
+  rb.className='rb'+(sonuc>0?' hl':sonuc<0?'':' ');
 }
 function hesaplaGramaj(){
   let m=pV(document.getElementById('mevcutMiktar').value);
@@ -333,137 +367,219 @@ function hesaplaIndirim(){
   document.getElementById('indirimSK').textContent=fN(indirimli)+' TL';
   document.getElementById('indirimTK').textContent=fN(indTutar)+' TL';
 }
+/* ---------- DÖVİZ + ALTIN CANLI VERİ ---------- */
 let dovizYon='tl';
-let liveRates={USD:{alis:0,satis:0},EUR:{alis:0,satis:0}};
+let liveRates={USD:{alis:0,satis:0},EUR:{alis:0,satis:0},GBP:{alis:0,satis:0}};
 let ratesLoaded=false;
+let ratesSource='';
+let usdTryLive=0;
+
 function setDovizYon(y){
   dovizYon=y;
   document.getElementById('yonBtnTL').className='dyb'+(y==='tl'?' ag2':'');
   document.getElementById('yonBtnDoviz').className='dyb'+(y==='doviz'?' aa2':'');
   document.getElementById('dovizMLabel').textContent=y==='tl'?'Döviz Miktarı':'TL Miktarı';
+  setKurFromRates();
   autoDovizHesapla();
 }
-function dovizTuruDegisti(){
+function setKurFromRates(){
+  if(!ratesLoaded)return;
   let sel=document.getElementById('dovizTuru').value;
-  if(ratesLoaded){
-    document.getElementById('dovizAlis').textContent=fN(liveRates[sel].alis,4);
-    document.getElementById('dovizSatis').textContent=fN(liveRates[sel].satis,4);
-    let kur=dovizYon==='tl'?liveRates[sel].satis:liveRates[sel].alis;
-    document.getElementById('dovizKuru').value=fN(kur,4);
-  }
-  autoDovizHesapla();
+  let r=liveRates[sel];
+  document.getElementById('dovizAlis').textContent=fN(r.alis,4);
+  document.getElementById('dovizSatis').textContent=fN(r.satis,4);
+  let kur=dovizYon==='tl'?r.satis:r.alis;
+  document.getElementById('dovizKuru').value=fN(kur,4);
 }
+function dovizTuruDegisti(){setKurFromRates();autoDovizHesapla();}
 function autoDovizHesapla(){let m=pV(document.getElementById('dovizMiktar').value);let k=pV(document.getElementById('dovizKuru').value);if(!m||!k)return;hesaplaDoviz();}
 function hesaplaDoviz(){
   let m=pV(document.getElementById('dovizMiktar').value);
   let k=pV(document.getElementById('dovizKuru').value);
-  if(!k){document.getElementById('dovizSK').textContent='0,00';return;}
+  let rb=document.getElementById('dovizSK');
+  if(!k){rb.textContent='0,00';return;}
   let sonuc=dovizYon==='tl'?m*k:m/k;
-  document.getElementById('dovizSK').textContent=fN(sonuc);
+  rb.textContent=fN(sonuc, dovizYon==='tl'?2:4);
 }
+/* Bir kaynaktan gelen ham sayıyı TL kuruna çevirir (TRY bazlı mı, yoksa 1 birim kaç TL?) */
+function numOf(v){ if(v===null||v===undefined)return 0; if(typeof v==='number')return v; let s=String(v).trim(); if(!s)return 0; if(s.indexOf(',')>-1)s=s.replace(/\./g,'').replace(',','.'); let n=parseFloat(s); return isFinite(n)?n:0; }
+
+const KUR_KAYNAKLARI=[
+  {ad:'Frankfurter (ECB)', url:'https://api.frankfurter.app/latest?from=USD&to=TRY,EUR,GBP', tip:'frankfurter'},
+  {ad:'open.er-api.com', url:'https://open.er-api.com/v6/latest/USD', tip:'erapi'},
+  {ad:'exchangerate.host', url:'https://api.exchangerate.host/latest?base=USD&symbols=TRY,EUR,GBP', tip:'erhost'}
+];
+
+function fillRatesFromUsdBase(usdTry, usdEur, usdGbp, kaynak){
+  if(!(usdTry>0))return false;
+  usdTryLive=usdTry;
+  let eurTry=usdEur>0?usdTry/usdEur:usdTry*1.08;
+  let gbpTry=usdGbp>0?usdTry/usdGbp:usdTry*1.27;
+  let makas = 0.0025; /* %0,25 alış-satış makası (yaklaşık) */
+  liveRates.USD={alis:usdTry*(1-makas/2),satis:usdTry*(1+makas/2)};
+  liveRates.EUR={alis:eurTry*(1-makas/2),satis:eurTry*(1+makas/2)};
+  liveRates.GBP={alis:gbpTry*(1-makas/2),satis:gbpTry*(1+makas/2)};
+  ratesLoaded=true; ratesSource=kaynak;
+  return true;
+}
+
+async function fetchKurKaynagi(k){
+  let r=await fetch(k.url,{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  let d=await r.json();
+  if(k.tip==='frankfurter'){
+    let rt=d.rates||{};
+    /* 1 USD = rates.TRY TL ; rates.EUR -> 1 USD kaç EUR */
+    return fillRatesFromUsdBase(numOf(rt.TRY), numOf(rt.EUR), numOf(rt.GBP), k.ad);
+  }
+  if(k.tip==='erapi'){
+    let rt=d.rates||{};
+    if(d.result&&d.result!=='success')throw new Error(d['error-type']||'hata');
+    return fillRatesFromUsdBase(numOf(rt.TRY), numOf(rt.EUR), numOf(rt.GBP), k.ad);
+  }
+  if(k.tip==='erhost'){
+    let rt=d.rates||{};
+    return fillRatesFromUsdBase(numOf(rt.TRY), numOf(rt.EUR), numOf(rt.GBP), k.ad);
+  }
+  return false;
+}
+
 async function fetchLiveRates(){
   let btn=document.getElementById('refreshBtn');if(btn)btn.classList.add('ld');
-  try{
-    let td=getToday();
-    let url='https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.A-TP.DK.USD.S-TP.DK.EUR.A-TP.DK.EUR.S&startDate='+td+'&endDate='+td+'&type=json&key=BO7a9VC8Gc';
-    let resp=await fetch(url);
-    if(resp.ok){
-      let data=await resp.json();
-      if(data.items&&data.items[0]){
-        let it=data.items[0];
-        liveRates.USD.alis=parseFloat(it["TP_DK_USD_A"])||0;
-        liveRates.USD.satis=parseFloat(it["TP_DK_USD_S"])||0;
-        liveRates.EUR.alis=parseFloat(it["TP_DK_EUR_A"])||0;
-        liveRates.EUR.satis=parseFloat(it["TP_DK_EUR_S"])||0;
-        ratesLoaded=true;
-      }
-    }
-  }catch(e){}
+  let btn2=document.getElementById('refreshAltinBtn');if(btn2)btn2.classList.add('ld');
+  let durum=document.getElementById('kurDurum');
+  if(durum)durum.innerHTML='<span class="dot off"></span>Güncelleniyor...';
+  ratesLoaded=false;
+  for(let k of KUR_KAYNAKLARI){
+    try{ if(await fetchKurKaynagi(k)) break; }catch(e){}
+  }
   if(!ratesLoaded){
     try{
-      let resp2=await fetch('https://api.exchangerate-api.com/v4/latest/TRY');
-      if(resp2.ok){
-        let d2=await resp2.json();
-        let usdTry=1/(d2.rates.USD||1);let eurTry=1/(d2.rates.EUR||1);
-        liveRates.USD.alis=usdTry-0.03;liveRates.USD.satis=usdTry+0.03;
-        liveRates.EUR.alis=eurTry-0.03;liveRates.EUR.satis=eurTry+0.03;
-        ratesLoaded=true;
+      let r2=await fetch('https://api.exchangerate-api.com/v4/latest/TRY',{cache:'no-store'});
+      if(r2.ok){
+        let d2=await r2.json();
+        let rt=d2.rates||{};
+        fillRatesFromUsdBase(1/numOf(rt.USD), numOf(rt.USD)/numOf(rt.EUR), numOf(rt.USD)/numOf(rt.GBP), 'exchangerate-api');
       }
     }catch(e2){}
   }
   if(!ratesLoaded){
-    liveRates.USD.alis=38.20;liveRates.USD.satis=38.35;
-    liveRates.EUR.alis=42.80;liveRates.EUR.satis=42.98;
-    ratesLoaded=true;
+    /* Son çare: bilinen yaklaşık değerler (ekranda UYARI gösterilir) */
+    liveRates.USD={alis:38.20,satis:38.35};
+    liveRates.EUR={alis:42.80,satis:42.98};
+    liveRates.GBP={alis:49.10,satis:49.30};
+    usdTryLive=38.275;
+    ratesSource='tahmini (çevrimdışı)';
+    ratesLoaded=false;
   }
-  updateRateDisplay();if(btn)btn.classList.remove('ld');
+  updateRateDisplay();
+  if(btn)btn.classList.remove('ld');
+  if(btn2)btn2.classList.remove('ld');
 }
-function getToday(){
-  let d=new Date();
-  return ('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)+'-'+d.getFullYear();
-}
+
 function updateRateDisplay(){
-  let dsel=document.getElementById('dovizTuru').value;
-  document.getElementById('dovizAlis').textContent=fN(liveRates[dsel].alis,4);
-  document.getElementById('dovizSatis').textContent=fN(liveRates[dsel].satis,4);
-  let dk=dovizYon==='tl'?liveRates[dsel].satis:liveRates[dsel].alis;
-  document.getElementById('dovizKuru').value=fN(dk,4);
-  document.querySelectorAll('.dot').forEach(d=>{d.classList.remove('off');});
+  setKurFromRates();
   let statusEl=document.getElementById('kurDurum');
-  if(statusEl)statusEl.innerHTML='<span class="dot"></span>Canlı';
+  if(statusEl){
+    if(ratesLoaded){statusEl.innerHTML='<span class="dot"></span>Canlı · '+ratesSource;}
+    else{statusEl.innerHTML='<span class="dot off"></span>Tahmini değer (bağlantı yok)';}
+  }
   updateAltinFromGram();
 }
-let altinYon='satis';
-let gramAltinAlis=0;let gramAltinSatis=0;
-const ALTIN_CARPYLAR={GAU:{alis:1,satis:1,gram:1},CEYREK:{alis:1.78,satis:0.22,gram:1.78},YARIM:{alis:3.56,satis:0.44,gram:3.56},TAM:{alis:7.10,satis:0.90,gram:7.10},CUMHURIYET:{alis:7.22,satis:1.05,gram:7.22},KULCE:{alis:1000,satis:1000,gram:1000}};
+
+/* ---------- ALTIN ---------- */
+let altinYon='satis';            /* satis = kullanıcı altını satıyor (alış fiyatı) */
+let gramAltinAlis=0;             /* kuyumcunun ALIŞ fiyatı (gram) */
+let gramAltinSatis=0;            /* kuyumcunun SATIŞ fiyatı (gram) */
+let onsUsd=0;
+let altinCanli=false;
+
+/* Has altın (24K) gram çarpanları: 1 adedin içindeki has altın gramı */
+const CEYREK_HAS=1.75;
+const ALTIN_TURLERI={
+  GAU:{ad:'Gram Altın (24K)', has:1, isAdet:false},
+  CEYREK:{ad:'Çeyrek Altın', has:Math.round(CEYREK_HAS*100000)/100000, isAdet:true},
+  YARIM:{ad:'Yarım Altın', has:Math.round(CEYREK_HAS*2*100000)/100000, isAdet:true},
+  TAM:{ad:'Tam Altın', has:Math.round(CEYREK_HAS*4*100000)/100000, isAdet:true},
+  CUMHURIYET:{ad:'Ata (Cumhuriyet) Altın', has:Math.round(CEYREK_HAS*4*100000)/100000, isAdet:true},
+  KULCE:{ad:'Külçe Altın (KG) - gram fiyatı', has:1, isAdet:false}
+};
+const ISCILIK_TL=0;              /* istersen buraya adet başı işçilik ekleyebilirsin */
+const ONS_GRAM=31.1034768;
+
 function setAltinYon(y){
   altinYon=y;
   document.getElementById('altinYonSatis').className='dyb'+(y==='satis'?' ag2':'');
   document.getElementById('altinYonAlis').className='dyb'+(y==='alis'?' aa2':'');
-  document.getElementById('altinSonucLabel').textContent=y==='satis'?'Alacağınız TL Tutarı':'Ödeyeceğiniz TL Tutarı';
+  document.getElementById('altinSonucLabel').textContent=y==='satis'?'Alacağınız TL Tutarı (kuruş dahil)':'Ödeyeceğiniz TL Tutarı (kuruş dahil)';
   autoAltinHesapla();
 }
 function altinTuruDegisti(){updateAltinDisplay();autoAltinHesapla();}
+
+function altinBirimFiyat(tip, yon){
+  let t=ALTIN_TURLERI[tip];
+  if(!t)return 0;
+  let hasGr=t.has;
+  /* SATIS(yön)=kullanıcı satıyor -> kuyumcunun alış fiyatı; ALIS(yön)=kullanıcı alıyor -> kuyumcunun satış fiyatı */
+  let gramFiyat = (yon==='satis') ? gramAltinAlis : gramAltinSatis;
+  let fiyat = gramFiyat*hasGr + ISCILIK_TL;
+  return fiyat;
+}
+
 function updateAltinFromGram(){
-  if(liveRates.USD.satis>0){
-    let goldOzUSD=2650;
-    gramAltinAlis=(goldOzUSD*liveRates.USD.alis/31.1035);
-    gramAltinSatis=gramAltinAlis+15;
+  /* Gram fiyatlarını DOLAR kuru + ONS altın fiyatından hesapla (doğru formül) */
+  if(usdTryLive>0){
+    let ons = onsUsd>0?onsUsd:2650;
+    let hasGr = ons*usdTryLive/ONS_GRAM;      /* has altın gram TL */
+    gramAltinAlis = hasGr*(1-0.01);            /* alış: %1 altında */
+    gramAltinSatis = hasGr*(1+0.02);           /* satış: %2 işçilik/makas */
+  }else if(gramAltinAlis<=0){
+    gramAltinAlis=0;gramAltinSatis=0;
   }
   updateAltinDisplay();
 }
+
 function updateAltinDisplay(){
   let sel=document.getElementById('altinTuru').value;
-  let c=ALTIN_CARPYLAR[sel];
-  let aFiyat=gramAltinAlis*c.alis;
-  let sFiyat=gramAltinSatis+(gramAltinSatis*c.satis);
-  if(sel==='KULCE'){aFiyat=gramAltinAlis*1000;sFiyat=gramAltinSatis*1000;}
-  document.getElementById('altinAlis').textContent=fN(aFiyat,2)+' TL';
-  document.getElementById('altinSatis').textContent=fN(sFiyat,2)+' TL';
+  let a=altinBirimFiyat(sel,'satis');  /* kullanıcının alacağı fiyat (kuyumcu alış) */
+  let s=altinBirimFiyat(sel,'alis');   /* kullanıcının ödeyeceği fiyat (kuyumcu satış) */
+  document.getElementById('altinAlis').textContent=fN(a,2)+' TL';
+  document.getElementById('altinSatis').textContent=fN(s,2)+' TL';
   let statusEl=document.getElementById('altinDurum');
-  if(statusEl)statusEl.innerHTML='<span class="dot"></span>Canlı';
+  if(statusEl){
+    if(altinCanli){statusEl.innerHTML='<span class="dot"></span>Ons: '+fN(onsUsd,1)+' $ · USD/TRY '+fN(usdTryLive,2);}
+    else if(gramAltinAlis>0){statusEl.innerHTML='<span class="dot"></span>Ons tahmini (bağlantı yok)';}
+    else{statusEl.innerHTML='<span class="dot off"></span>Veri bekleniyor...';}
+  }
 }
+
 function autoAltinHesapla(){let m=pV(document.getElementById('altinMiktar').value);if(!m)return;hesaplaAltin();}
 function hesaplaAltin(){
   let m=pV(document.getElementById('altinMiktar').value);
   let sel=document.getElementById('altinTuru').value;
-  let c=ALTIN_CARPYLAR[sel];
-  let fiyat;
-  if(altinYon==='satis'){
-    fiyat=gramAltinAlis*c.alis;
-    if(sel==='KULCE')fiyat=gramAltinAlis*1000;
-  }else{
-    fiyat=gramAltinSatis+(gramAltinSatis*c.satis);
-    if(sel==='KULCE')fiyat=gramAltinSatis*1000;
-  }
+  let fiyat=altinBirimFiyat(sel, altinYon==='satis'?'satis':'alis');
   let sonuc=m*fiyat;
   let rb=document.getElementById('altinSK');
   rb.textContent=fN(sonuc)+' TL';
   rb.classList.add('rfl');setTimeout(()=>rb.classList.remove('rfl'),300);
 }
+
+/* Ons (spot altın) fiyatı çek */
+async function fetchOns(){
+  const kaynaklar=[
+    async()=>{let r=await fetch('https://api.gold-api.com/price/XAU',{cache:'no-store'});if(!r.ok)throw 0;let d=await r.json();let p=numOf(d.price);if(p>0){onsUsd=p;return true;}throw 0;},
+    async()=>{let r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd',{cache:'no-store'});if(!r.ok)throw 0;let d=await r.json();let p=numOf(d['pax-gold']&&d['pax-gold'].usd);if(p>0){onsUsd=p;return true;}throw 0;}
+  ];
+  for(let f of kaynaklar){ try{ if(await f()){altinCanli=true;return;} }catch(e){} }
+  altinCanli=false;
+}
+
+/* ---------- İŞ HUKUKU ---------- */
 let isHukTab='tazminat';
-const GV2026=[{min:0,max:110000,oran:15},{min:110000,max:230000,oran:20},{min:230000,max:580000,oran:27},{min:580000,max:3000000,oran:35},{min:3000000,max:Infinity,oran:40}];
-const SGK_ORANI=0.145;const DV_ORANI=0.00759;const KIDEM_GUN=35.05;
+const GV2026=[{min:0,max:190000,oran:15},{min:190000,max:400000,oran:20},{min:400000,max:1500000,oran:27},{min:1500000,max:5300000,oran:35},{min:5300000,max:Infinity,oran:40}];
+const SGK_ORANI=0.15;      /* %14 SGK + %1 işsizlik (çalışan payı) */
+const DV_ORANI=0.00759;
+const KIDEM_GUN=35.05;
 function switchIsTab(tab){
   isHukTab=tab;
   document.getElementById('tabNetBur').className='stb'+(tab==='netBur'?' active':'');
@@ -471,8 +587,8 @@ function switchIsTab(tab){
   document.getElementById('tabTazminat').className='stb'+(tab==='tazminat'?' active':'');
   let b=document.getElementById('isHukBaslik');
   let ml=document.getElementById('maasLabel');
-  if(tab==='netBur'){b.textContent='Net → Brüt Hesaplama';ml.textContent='Aylık Net Maaş';}
-  else if(tab==='burNet'){b.textContent='Brüt → Net Hesaplama';ml.textContent='Aylık Brüt Maaş';}
+  if(tab==='netBur'){b.textContent='Net → Brüt Hesaplama';ml.textContent='Aylık Net Maaş';document.getElementById('hesMaasLabel').textContent='Hesaplanan Brüt Maaş';}
+  else if(tab==='burNet'){b.textContent='Brüt → Net Hesaplama';ml.textContent='Aylık Brüt Maaş';document.getElementById('hesMaasLabel').textContent='Hesaplanan Net Maaş';}
   else{b.textContent='Tazminat Hesaplama';ml.textContent='Aylık Brüt Maaş';}
   document.getElementById('maasBlogu').style.display=(tab!=='tazminat')?'block':'none';
   document.getElementById('tazminatBlogu').style.display=(tab==='tazminat')?'block':'none';
@@ -491,14 +607,14 @@ function bruttenNete(brut,kumMatrah,ekOd){
   let gvMatrahi=brut-sgk+ekOd;
   let gv=hesaplaGV(kumMatrah+gvMatrahi)-hesaplaGV(kumMatrah);
   let dv=brut*DV_ORANI;
-  return brut-sgk-gv-dv+ekOd;
+  return brut-sgk-gv-dv+ekOd*0;
 }
 function nettenBrute(net,kumMatrah,ekOd){
-  let brute=net;
-  for(let i=0;i<30;i++){
+  let brute=net*1.35;
+  for(let i=0;i<60;i++){
     let hesapNet=bruttenNete(brute,kumMatrah,ekOd);
     if(Math.abs(hesapNet-net)<0.01)break;
-    brute+=(net-hesapNet)*1.1;
+    brute+=(net-hesapNet)*1.05;
   }
   return brute;
 }
@@ -531,34 +647,36 @@ function hesaplaIsHukuku(){
   let cDate=new Date(cYil,cAy,cGun);
   let diffMs=cDate-gDate;
   if(diffMs<0){document.getElementById('proSure').textContent='Geçersiz tarih';return;}
-  let diffDays=Math.floor(diffMs/(1000*60*60*24));
+  let diffDays=Math.round(diffMs/86400000);
   let yil=Math.floor(diffDays/365);let kalanGun=diffDays%365;let ay=Math.floor(kalanGun/30);let gun=kalanGun%30;
   document.getElementById('proSure').textContent=yil+' Yıl, '+ay+' Ay, '+gun+' Gün';
   let maas=pV(document.getElementById('isHukMaas').value);
   let kumMatrah=pV(document.getElementById('kumMatrah').value);
   let ekOd=pV(document.getElementById('ekOdemeler').value);
   if(isHukTab==='tazminat'){
-    let kidemTutar=KIDEM_GUN*diffDays;
-    let kidemNet=kidemTutar-(hesaplaGV(kumMatrah+kidemTutar)-hesaplaGV(kumMatrah));
+    let giydirilmis=maas+ekOd;
+    let brutKidem=giydirilmis*KIDEM_GUN/30*yil;
+    let kidemNet=brutKidem-(hesaplaGV(kumMatrah+brutKidem)-hesaplaGV(kumMatrah))-(brutKidem*DV_ORANI);
     document.getElementById('proKidem').textContent=fN(kidemNet)+' TL';
     let ihbarGun=0;
     if(diffDays<180)ihbarGun=2;else if(diffDays<540)ihbarGun=4;else if(diffDays<1080)ihbarGun=6;else if(diffDays<2160)ihbarGun=8;else ihbarGun=12;
-    let ihbarBrut=maas/30*ihbarGun;
-    let ihbarNet=ihbarBrut-(hesaplaGV(kumMatrah+ihbarBrut)-hesaplaGV(kumMatrah));
+    let ihbarBrut=giydirilmis/30*ihbarGun;
+    let ihbarNet=bruttenNete(ihbarBrut,kumMatrah,0);
     document.getElementById('proIhbar').textContent=fN(ihbarNet)+' TL';
     document.getElementById('proGenel').textContent=fN(kidemNet+ihbarNet)+' TL';
   }else if(isHukTab==='burNet'){
-    let netMaas=bruttenNete(maas,kumMatrah,ekOd);
-    document.getElementById('proMaas').textContent=fN(netMaas)+' TL';
+    document.getElementById('proMaas').textContent=fN(bruttenNete(maas,kumMatrah,ekOd))+' TL';
   }else{
-    let brutMaas=nettenBrute(maas,kumMatrah,ekOd);
-    document.getElementById('proMaas').textContent=fN(brutMaas)+' TL';
+    document.getElementById('proMaas').textContent=fN(nettenBrute(maas,kumMatrah,ekOd))+' TL';
   }
 }
 function temizleIsHuk(){
   ['isHukMaas','kumMatrah','ekOdemeler','digerKazanc'].forEach(id=>{document.getElementById(id).value='';});
-  ['proSure','proKidem','proIhbar','proGenel','proMaas'].forEach(id=>{document.getElementById(id).textContent='0,00';});
+  ['proKidem','proIhbar','proGenel','proMaas'].forEach(id=>{document.getElementById(id).textContent='0,00 TL';});
+  document.getElementById('proSure').textContent='0 Yıl, 0 Ay, 0 Gün';
 }
+
+/* ---------- YOL & YAKIT ---------- */
 function hesaplaHizYakit(){
   let km=pV(document.getElementById('yolMesafe').value);
   let hiz=pV(document.getElementById('yolHiz').value);
@@ -566,12 +684,11 @@ function hesaplaHizYakit(){
   let fiyat=pV(document.getElementById('yolYakitFiyat').value);
   if(!km)return;
   let saat=0,dakika=0;
-  if(hiz>0){let toplamSaat=km/hiz;saat=Math.floor(toplamSaat);dakika=Math.round((toplamSaat-saat)*60);}
+  if(hiz>0){let toplamSaat=km/hiz;saat=Math.floor(toplamSaat);dakika=Math.round((toplamSaat-saat)*60);if(dakika===60){saat++;dakika=0;}}
   document.getElementById('yolSure').textContent=saat+' Saat, '+dakika+' Dakika';
   let litre=km*tuk/100;
   document.getElementById('yolLitre').textContent=fN(litre)+' Litre';
-  let maliyet=litre*fiyat;
-  document.getElementById('yolMaliyet').textContent=fN(maliyet)+' TL';
+  document.getElementById('yolMaliyet').textContent=fN(litre*fiyat)+' TL';
 }
 function autoTuketimAyarla(){
   let hiz=pV(document.getElementById('yolHiz').value);
@@ -602,11 +719,11 @@ async function haritadanMesafeCek(){
       document.getElementById('yolMesafe').value=Math.round(km);
       document.getElementById('apiDurum').textContent='Tahmini mesafe: '+Math.round(km)+' km';
       hesaplaHizYakit();
-    }else{
-      document.getElementById('apiDurum').textContent='Adres bulunamadı';
-    }
+    }else{document.getElementById('apiDurum').textContent='Adres bulunamadı';}
   }catch(e){document.getElementById('apiDurum').textContent='API hatası, lütfen manuel girin';}
 }
+
+/* ---------- HESAP MAKİNESİ ---------- */
 let iosCurrent='0';let iosPrev=null;let iosOpSym=null;let iosNewNum=true;
 function iosNum(n){
   if(iosNewNum){iosCurrent=(n===','?'0.':n);iosNewNum=false;}
@@ -614,12 +731,12 @@ function iosNum(n){
   updateIosDisplay();
 }
 function iosOp(op){
-  if(iosPrev!==null){let result=safeCalc(iosPrev,iosCurrent,iosOpSym);iosCurrent=String(result);iosPrev=iosCurrent;}
+  if(iosPrev!==null&&iosOpSym){let result=safeCalc(iosPrev,iosCurrent,iosOpSym);iosCurrent=String(result);iosPrev=iosCurrent;}
   else{iosPrev=iosCurrent;}
   iosOpSym=op;iosNewNum=true;updateIosDisplay();
 }
 function iosEquals(){
-  if(iosPrev!==null){let result=safeCalc(iosPrev,iosCurrent,iosOpSym);iosCurrent=String(result);iosPrev=null;iosOpSym=null;iosNewNum=true;updateIosDisplay();}
+  if(iosPrev!==null&&iosOpSym){let result=safeCalc(iosPrev,iosCurrent,iosOpSym);iosCurrent=String(result);iosPrev=null;iosOpSym=null;iosNewNum=true;updateIosDisplay();}
 }
 function safeCalc(a,b,op){
   a=parseFloat(a)||0;b=parseFloat(b)||0;
@@ -633,8 +750,20 @@ function updateIosDisplay(){
   let formula=iosPrev?iosPrev.replace('.',',')+(iosOpSym==='/'?' ÷ ':iosOpSym==='*'?' × ':iosOpSym==='-'?' − ':' + '):'';
   document.getElementById('iosFormula').textContent=formula;
 }
+function toggleFormula(btn){
+  var box=btn.nextElementSibling;
+  if(!box)return;
+  var open=box.classList.toggle('show');
+  btn.textContent=open?'📐 Formülü Gizle':'📐 Formülü Göster';
+}
 function toggleCalc(show){document.getElementById('calcOverlay').style.display=show?'flex':'none';}
+
 initDateSelectors();
-fetchLiveRates();
+setAltinYon('satis');
+(async function(){
+  await fetchLiveRates();
+  await fetchOns();
+  updateAltinFromGram();
+})();
 </script>
 </html>
