@@ -93,11 +93,33 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 @media(max-width:380px){.gl{grid-template-columns:repeat(2,1fr)}.gc,.pp{padding:18px 12px}}
 .fmb{width:100%;margin-top:10px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);color:var(--pur);padding:12px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
 .fmb:active{transform:scale(.97)}
-.fmx{display:none;margin-top:8px;background:rgba(139,92,246,.08);border:1px dashed rgba(139,92,246,.35);border-radius:10px;padding:12px 14px;color:var(--txt);font-size:.9rem;line-height:1.65}
-.fmx.show{display:block;animation:pIn .25s ease}
+.fmx{display:none !important;margin-top:8px;background:rgba(139,92,246,.08);border:1px dashed rgba(139,92,246,.35);border-radius:10px;padding:12px 14px;color:var(--txt);font-size:.9rem;line-height:1.65}
+.fmx.show{display:block !important;animation:pIn .25s ease}
 .fmx b{color:var(--pur)}
 .fmx .fx{display:block;background:rgba(0,0,0,.25);border-radius:8px;padding:8px 10px;margin:6px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86rem;color:var(--txt);letter-spacing:.2px}
 .fmx .fo{color:var(--txt2);font-size:.8rem;margin-top:4px}
+body.bigmode .gc h1{font-size:2.3rem}
+body.bigmode .gc .sub{font-size:1.1rem}
+body.bigmode .gb{font-size:1.02rem;padding:20px 6px}
+body.bigmode .gb .ic{font-size:2.75rem}
+body.bigmode .pt{font-size:1.45rem}
+body.bigmode label{font-size:1rem}
+body.bigmode input[type=text],body.bigmode input[type=number],body.bigmode select{font-size:1.25rem;padding:16px 14px}
+body.bigmode .cb{font-size:1.12rem;padding:17px}
+body.bigmode .xb{font-size:1.12rem;padding:17px}
+body.bigmode .rb{font-size:1.6rem;padding:18px}
+body.bigmode .rb.dm{font-size:1.25rem}
+body.bigmode .rb.hl,body.bigmode .rb.hg,body.bigmode .rb.hb{font-size:1.75rem}
+body.bigmode .oct,body.bigmode .fmb{font-size:1.1rem;padding:16px}
+body.bigmode .fmx{font-size:1.05rem}
+body.bigmode .fmx .fx{font-size:1rem}
+body.bigmode .dyb,body.bigmode .stb{font-size:1rem;padding:13px 6px}
+body.bigmode .asb .al{font-size:.9rem}
+body.bigmode .asb .av{font-size:1.3rem}
+body.bigmode .ks{font-size:.95rem}
+body.bigmode .ttb{font-size:1.05rem}
+body.bigmode .gc,body.bigmode .pp{max-width:560px}
+.ttb.on{background:rgba(59,130,246,.2);border-color:rgba(59,130,246,.4);color:var(--pri)}
 .rfl{animation:rfl .3s ease}
 @keyframes rfl{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
 </style>
@@ -120,8 +142,10 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
   <button class="gb ar" onclick="window.open('https://www.resmigazete.gov.tr/','_blank')"><span class="ic">📰</span>R. Gazete</button>
   <button class="gb ag" onclick="window.open('https://halilmerinos-sudo.github.io/gazete-merkez/','_blank')"><span class="ic">🗞️</span>Gazeteler</button>
   <button class="gb aa" onclick="openPanel('altinH')"><span class="ic">🥇</span>Altın İşlem</button>
+  <button class="gb ag" onclick="openPanel('yakitKH')"><span class="ic">⛽</span>Yakıt Kıyas</button>
+  <button class="gb ap" onclick="openPanel('birimH')"><span class="ic">🔄</span>Birim Çevir</button>
 </div>
-<div class="fc"><button class="ttb" onclick="toggleTheme()">🌓 Tema</button></div>
+<div class="fc"><button class="ttb" onclick="toggleTheme()">🌓 Tema</button><button class="ttb" id="bigBtn" onclick="toggleBigMode()">🔎 Büyük Yazı</button></div>
 </div>
 
 <!-- % FARK -->
@@ -270,6 +294,55 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
+
+<!-- YAKIT KARŞILAŞTIRMA -->
+<div id="yakitKH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">Yakıt Karşılaştırma</div>
+<div class="st"><button class="stb active" id="ykTabA" onclick="ykTab('a')">🚗 Aracım</button><button class="stb" id="ykTabB" onclick="ykTab('b')">🚌/🚗 Alternatif</button></div>
+<div id="ykFormA">
+<div class="rg"><div class="fg"><label>Mesafe (KM)</label><input type="text" id="ykKm" placeholder="0" oninput="fmtIn(this);ykHesapla()"></div>
+<div class="fg"><label>Tüketim (L/100km)</label><input type="text" id="ykTuk" placeholder="Örn: 6,5" oninput="fmtIn(this);ykHesapla()"></div></div>
+<div class="rg"><div class="fg"><label>Yakıt Litre Fiyatı (TL)</label><input type="text" id="ykFiyat" placeholder="Örn: 43,50" oninput="fmtIn(this);ykHesapla()"></div>
+<div class="fg"><label>Kişi Sayısı</label><input type="text" id="ykKisi" placeholder="1" value="1" oninput="fmtIn(this);ykHesapla()"></div></div>
+</div>
+<div id="ykFormB" style="display:none">
+<div class="rg"><div class="fg"><label>Alternatif Gidiş Fiyatı (TL/kişi)</label><input type="text" id="ykAltFiyat" placeholder="Örn: 450" oninput="fmtIn(this);ykHesapla()"></div>
+<div class="fg"><label>Kişi Sayısı</label><input type="text" id="ykAltKisi" placeholder="1" value="1" oninput="fmtIn(this);ykHesapla()"></div></div>
+</div>
+<div class="dyt"><button class="dyb ag2" id="ykGidisDonus" onclick="ykToggleGD()">🔁 Gidiş-Dönüş: HAYIR</button><button class="dyb" onclick="ykHesapla()">📊 Karşılaştır</button></div>
+<div class="rc">
+<label>Kendi Aracın — Toplam Maliyet</label><div class="rb hb" id="ykA">0,00 TL</div>
+<label>Alternatif — Toplam Maliyet</label><div class="rb" id="ykB" style="color:var(--wrn)">0,00 TL</div>
+<label>Kişi Başı (Kendi Aracın)</label><div class="rb dm" id="ykAKisi">0,00 TL</div>
+<label id="ykFarkLabel">Fark</label><div class="rb hl" id="ykFark">0,00 TL</div>
+</div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - Yakıt Karşılaştırma</b><span class="fx">Yakıt (L) = Mesafe × Tüketim / 100</span><span class="fx">Maliyet = Litre × Litre Fiyatı</span><span class="fo">Gidiş-dönüş açıksa mesafe 2 ile çarpılır.</span><span class="fx">Kişi Başı = Toplam Maliyet / Kişi Sayısı</span><span class="fx">Fark = Alternatif − Kendi Aracın</span><span class="fo">Pozitif fark: kendi araban daha ekonomik.</span></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
+
+<!-- BİRİM ÇEVİRİCİ -->
+<div id="birimH" class="pp">
+<button class="bb" onclick="backToDashboard()">← Geri</button>
+<div class="pt">Birim Çevirici</div>
+<div class="fg"><label>Kategori</label><select id="bcKategori" onchange="bcKategoriDegisti()">
+<option value="agirlik">⚖️ Ağırlık / Altın</option>
+<option value="hacim">🧴 Hacim / Yakıt</option>
+<option value="uzunluk">📏 Uzunluk</option>
+<option value="alan">🗺️ Alan</option>
+<option value="sicaklik">🌡️ Sıcaklık</option>
+</select></div>
+<div class="fg"><label>Miktar</label><input type="text" id="bcMiktar" placeholder="Örn: 100" value="1" oninput="fmtIn(this);bcHesapla()"></div>
+<div class="rg"><div class="fg"><label>Birim →</label><select id="bcDan" onchange="bcHesapla()"></select></div>
+<div class="fg"><label>Birim</label><select id="bcE" onchange="bcHesapla()"></select></div></div>
+<div class="bg"><button class="cb p" onclick="bcHesapla()">ÇEVİR</button><button class="xb" onclick="bcTemizle()">C</button></div>
+<div class="rc"><label>Sonuç</label><div class="rb hl" id="bcSK">1</div></div>
+<div id="bcTablo" style="margin-top:10px"></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Formül - Birim Çevirme</b><span class="fx">Sonuç = Miktar × (Kaynak Katsayı / Hedef Katsayı)</span><span class="fo">Her birim gram, litre, metre veya m² cinsinden katsayıya çevrilir.</span><span class="fx">Sıcaklık: °C = (°F − 32) / 1,8  -  °F = °C × 1,8 + 32</span><span class="fx">Örnek: 1 ons = 31,1035 gram → 5 ons = 155,52 gram</span></div>
+<button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
+</div>
 </div>
 
 <!-- iPhone Calculator -->
@@ -752,14 +825,120 @@ function updateIosDisplay(){
 }
 function toggleFormula(btn){
   var box=btn.nextElementSibling;
-  if(!box)return;
-  var open=box.classList.toggle('show');
+  if(!box||!box.classList.contains('fmx'))return;
+  var open=!box.classList.contains('show');
+  if(open){box.classList.add('show');box.style.display='block';}
+  else{box.classList.remove('show');box.style.display='none';}
   btn.textContent=open?'📐 Formülü Gizle':'📐 Formülü Göster';
+  if(open){try{box.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}}
 }
+
+/* ---------- YAKIT KARŞILAŞTIRMA ---------- */
+let ykGidisDonus=false;
+function ykTab(t){
+  document.getElementById('ykTabA').className='stb'+(t==='a'?' active':'');
+  document.getElementById('ykTabB').className='stb'+(t==='b'?' active':'');
+  document.getElementById('ykFormA').style.display=(t==='a')?'block':'none';
+  document.getElementById('ykFormB').style.display=(t==='b')?'block':'none';
+}
+function ykToggleGD(){
+  ykGidisDonus=!ykGidisDonus;
+  let b=document.getElementById('ykGidisDonus');
+  b.className='dyb'+(ykGidisDonus?' ag2':'');
+  b.textContent='🔁 Gidiş-Dönüş: '+(ykGidisDonus?'EVET':'HAYIR');
+  ykHesapla();
+}
+function ykHesapla(){
+  let km=pV(document.getElementById('ykKm').value);
+  let tuk=pV(document.getElementById('ykTuk').value);
+  let fiyat=pV(document.getElementById('ykFiyat').value);
+  let kisi=pV(document.getElementById('ykKisi').value)||1;
+  let altF=pV(document.getElementById('ykAltFiyat').value);
+  let altK=pV(document.getElementById('ykAltKisi').value)||1;
+  let carpan=ykGidisDonus?2:1;
+  let litre=km*carpan*tuk/100;
+  let aTop=litre*fiyat;
+  let bTop=altF*altK*carpan;
+  document.getElementById('ykA').textContent=fN(aTop)+' TL';
+  document.getElementById('ykB').textContent=fN(bTop)+' TL';
+  document.getElementById('ykAKisi').textContent=fN(aTop/kisi)+' TL  ('+fN(litre)+' L)';
+  let fark=bTop-aTop;
+  let fEl=document.getElementById('ykFark');
+  document.getElementById('ykFarkLabel').textContent=fark>=0?'Araçla '+fN(Math.abs(fark))+' TL daha ucuz':'Alternatif '+fN(Math.abs(fark))+' TL daha ucuz';
+  fEl.textContent=fN(Math.abs(fark))+' TL';
+  fEl.style.background = fark>=0 ? 'linear-gradient(135deg,#10b981,#059669)' : 'linear-gradient(135deg,#f59e0b,#d97706)';
+}
+
+/* ---------- BİRİM ÇEVİRİCİ ---------- */
+const BC_DATA={
+  agirlik:{ad:'Ağırlık / Altın',baz:'gram',birimler:[['gram',1],['kilogram',1000],['ton',1000000],['ons (altın)',31.1034768],['ons (avoirdupois)',28.349523],['miligram',0.001],['pound (lb)',453.59237],['kırat',0.2]]},
+  hacim:{ad:'Hacim / Yakıt',baz:'litre',birimler:[['litre',1],['mililitre',0.001],['galon (ABD)',3.785411784],['galon (İngiliz)',4.54609],['varil (petrol)',158.987294928],['inçküp',0.016387064],['feet küp',28.316846592]]},
+  uzunluk:{ad:'Uzunluk',baz:'metre',birimler:[['metre',1],['kilometre',1000],['santimetre',0.01],['milimetre',0.001],['mil (mile)',1609.344],['deniz mili',1852],['inç',0.0254],['feet',0.3048],['yarda',0.9144]]},
+  alan:{ad:'Alan',baz:'metrekare',birimler:[['metrekare (m²)',1],['kilometrekare (km²)',1000000],['hektar',10000],['dönüm (1000 m²)',1000],['ar (100 m²)',100],['feetkare',0.09290304],['inçkare',0.00064516]]},
+  sicaklik:{ad:'Sıcaklık',baz:'°C',birimler:[['°C',1],['°F',1],['Kelvin',1]]}
+};
+function bcKategoriDegisti(){
+  let k=document.getElementById('bcKategori').value;
+  let d=BC_DATA[k];
+  let dan=document.getElementById('bcDan'), e=document.getElementById('bcE');
+  dan.innerHTML='';e.innerHTML='';
+  d.birimler.forEach(function(b){
+    let o1=document.createElement('option');o1.value=b[0];o1.textContent=b[0];dan.appendChild(o1);
+    let o2=document.createElement('option');o2.value=b[0];o2.textContent=b[0];e.appendChild(o2);
+  });
+  dan.selectedIndex=0;
+  e.selectedIndex=Math.min(1,d.birimler.length-1);
+  bcHesapla();
+}
+function bcHesapla(){
+  let k=document.getElementById('bcKategori').value;
+  let d=BC_DATA[k];
+  let m=pV(document.getElementById('bcMiktar').value);
+  let dan=document.getElementById('bcDan').value;
+  let e=document.getElementById('bcE').value;
+  let sonuc=0;
+  if(k==='sicaklik'){
+    let c;
+    if(dan==='°C')c=m; else if(dan==='°F')c=(m-32)/1.8; else c=m-273.15;
+    if(e==='°C')sonuc=c; else if(e==='°F')sonuc=c*1.8+32; else sonuc=c+273.15;
+  }else{
+    let kd=0,ke=0;
+    d.birimler.forEach(function(b){if(b[0]===dan)kd=b[1];if(b[0]===e)ke=b[1];});
+    if(ke>0)sonuc=m*kd/ke;
+  }
+  let rond = (k==='sicaklik')?2:4;
+  document.getElementById('bcSK').textContent=fN(sonuc,rond)+' '+e;
+  /* küçük tablo: aynı miktarın tüm birimleri */
+  let html='<div style="font-size:.8rem;color:var(--txt3);margin-bottom:6px;font-weight:700">'+fN(m,2)+' '+dan+' karşılığı</div>';
+  d.birimler.forEach(function(b){
+    let v;
+    if(k==='sicaklik'){
+      let c = dan==='°C'?m:(dan==='°F'?(m-32)/1.8:m-273.15);
+      v = b[0]==='°C'?c:(b[0]==='°F'?c*1.8+32:c+273.15);
+    }else{ v=m*( (d.birimler.filter(function(x){return x[0]===dan;})[0][1]) / b[1] ); }
+    html+='<div class="rb dm" style="margin-bottom:6px;justify-content:space-between;padding:10px 14px"><span style="font-size:.85rem;color:var(--txt2)">'+b[0]+'</span><span>'+fN(v,k==='sicaklik'?2:4)+'</span></div>';
+  });
+  document.getElementById('bcTablo').innerHTML=html;
+}
+function bcTemizle(){
+  document.getElementById('bcMiktar').value='1';
+  bcHesapla();
+}
+
+/* ---------- BÜYÜK YAZI MODU ---------- */
+function toggleBigMode(){
+  let on=document.body.classList.toggle('bigmode');
+  let b=document.getElementById('bigBtn');
+  if(b){b.className='ttb'+(on?' on':'');b.textContent=on?'🔎 Büyük Yazı: AÇIK':'🔍 Büyük Yazı: KAPALI';}
+  try{localStorage.setItem('hp_big',on?'1':'0');}catch(e){}
+}
+
 function toggleCalc(show){document.getElementById('calcOverlay').style.display=show?'flex':'none';}
 
 initDateSelectors();
 setAltinYon('satis');
+bcKategoriDegisti();
+try{if(localStorage.getItem('hp_big')==='1'){document.body.classList.add('bigmode');var bb=document.getElementById('bigBtn');if(bb){bb.className='ttb on';bb.textContent='🔎 Büyük Yazı: AÇIK';}}}catch(e){}
 (async function(){
   await fetchLiveRates();
   await fetchOns();
