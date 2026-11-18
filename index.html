@@ -95,6 +95,7 @@ input:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--prig
 .fmb:active{transform:scale(.97)}
 .fmx{display:none !important;margin-top:8px;background:rgba(139,92,246,.08);border:1px dashed rgba(139,92,246,.35);border-radius:10px;padding:12px 14px;color:var(--txt);font-size:.9rem;line-height:1.65}
 .fmx.show{display:block !important;animation:pIn .25s ease}
+body.allfm .fmx{display:block !important}
 .fmx b{color:var(--pur)}
 .fmx .fx{display:block;background:rgba(0,0,0,.25);border-radius:8px;padding:8px 10px;margin:6px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86rem;color:var(--txt);letter-spacing:.2px}
 .fmx .fo{color:var(--txt2);font-size:.8rem;margin-top:4px}
@@ -145,7 +146,7 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
   <button class="gb ag" onclick="openPanel('yakitKH')"><span class="ic">⛽</span>Yakıt Kıyas</button>
   <button class="gb ap" onclick="openPanel('birimH')"><span class="ic">🔄</span>Birim Çevir</button>
 </div>
-<div class="fc"><button class="ttb" onclick="toggleTheme()">🌓 Tema</button><button class="ttb" id="bigBtn" onclick="toggleBigMode()">🔎 Büyük Yazı</button></div>
+<div class="fc"><button class="ttb" onclick="toggleTheme()">🌓 Tema</button><button class="ttb" id="bigBtn" onclick="toggleBigMode()">🔎 Büyük Yazı</button><button class="ttb" id="allFmBtn" onclick="toggleAllFormulas()">📐 Tüm Formüller</button></div>
 </div>
 
 <!-- % FARK -->
@@ -158,31 +159,7 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="rc"><label>Sonuç</label><div class="rb" id="sonucK">0,00 %</div></div>
 
 <button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - % Fark</b><span class="fx">Değişim (%) = (Yeni − Eski) / Eski × 100</span><span class="fo">İki fiyat arasındaki artış veya azalış yüzdesi.</span><span class="fx">Örnek: (120 − 100) / 100 × 100 = %20</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - Birim / Gram Fiyat</b><span class="fx">1 Gram Fiyatı = Toplam Fiyat / Miktar</span><span class="fx">1 Kilogram Fiyatı = (Fiyat / Miktar) × 1000</span><span class="fx">Örnek: 400 TL / 700 gr = 0,5714 TL/gr → 571,43 TL/kg</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - % Artış (Zam)</b><span class="fx">Yeni Fiyat = Ana Fiyat × (1 + Oran / 100)</span><span class="fx">Zam Miktarı = Yeni Fiyat − Ana Fiyat</span><span class="fx">Örnek: 500 × 1,20 = 600 TL → zam 100 TL</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - KDV Ekle / Çıkar</b><span class="fx">KDV Ekle: Tutar × (1 + Oran / 100)</span><span class="fo">KDV hariç fiyattan KDV dahil fiyata.</span><span class="fx">KDV Çıkar: Tutar / (1 + Oran / 100)</span><span class="fo">KDV dahil fiyattan hariç fiyata.</span><span class="fx">KDV Tutarı = Sonuç − Giriş (eklemede), Giriş − Sonuç (çıkarmada)</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - % İndirim</b><span class="fx">İndirimli Fiyat = Fiyat × (1 − Oran / 100)</span><span class="fx">İndirim Miktarı = Fiyat − İndirimli Fiyat</span><span class="fx">Örnek: 200 TL %15 indirim → 170 TL (30 TL indirim)</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - Döviz Kuru</b><span class="fx">Döviz → TL: Sonuç = Miktar × Kur</span><span class="fo">Döviz miktarı ile kuru çarparsın.</span><span class="fx">TL → Döviz: Sonuç = Miktar / Kur</span><span class="fo">TL miktarını kura bölersin.</span><span class="fx">Kur = 1 birim yabancı paranın TL karşılığı</span><span class="fo">Dövizi TL ye çevirirken SATIŞ kuru kullanılır.</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - Altın Fiyatı</b><span class="fx">Has Gram (TL) = Ons ($) × Dolar Kuru / 31,1035</span><span class="fo">1 ons = 31,1035 gram.</span><span class="fx">Kuyumcu Alış = Has Gram × 0,99</span><span class="fo">Altınını satarken alacağın fiyat.</span><span class="fx">Kuyumcu Satış = Has Gram × 1,02</span><span class="fo">Altın alırken ödeyeceğin fiyat.</span><span class="fx">Adet Fiyatı = Gram Fiyatı × Has Gram Miktarı</span><span class="fo">Çeyrek 1,75 gr - Yarım 3,50 gr - Tam/Ata 7,00 gr.</span><span class="fx">Örnek: Ons 4100 $, kur 41,50 → Has 5470 TL → Çeyrek satış ≈ 9.765 TL</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - Maaş ve Tazminat</b><span class="fx">Brüt → Net: Net = Brüt − SGK(%15) − Gelir Vergisi − Damga(%0,759)</span><span class="fo">Gelir vergisi kümülatif matraha göre kademeli hesaplanır.</span><span class="fx">Net → Brüt: Net sonucu tutana kadar iteratif aranır</span><span class="fo">Yaklaşık %35 brüt/net oranından başlar.</span><span class="fx">Kıdem = Giydirilmiş Brüt / 30 × 35,05 × Yıl</span><span class="fo">Giydirilmiş brüt = maaş + ek ödemeler.</span><span class="fx">İhbar = Gün Sayısı (2/4/6/8/12) × Günlük Brüt</span><span class="fo">Kıdeme göre ihbar süresi belirlenir.</span></div>
-
-<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - Yol ve Yakıt</b><span class="fx">Süre (saat) = Mesafe / Ortalama Hız</span><span class="fx">Yakıt (Litre) = Mesafe × Tüketim / 100</span><span class="fo">Tüketim L/100km cinsindendir.</span><span class="fx">Maliyet = Litre × Litre Fiyatı</span><span class="fx">Örnek: 500 km × 6 L/100km = 30 L → 30 × 43,50 = 1.305 TL</span></div>
+<div class="fmx"><b>📐 % Fark</b><span class="fx">Değişim (%) = (Yeni − Eski) ÷ Eski × 100</span><span class="fx">Eski 100, Yeni 120 → (120−100)÷100×100 = %20</span><span class="fo">Artış pozitif, azalış negatif sonuç verir.</span><span class="fx">Fark (TL) = Yeni − Eski</span><span class="fo">Yüzdeye ek olarak TL farkı da gösterilir.</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -194,6 +171,8 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="fg"><label>Fiyat (TL)</label><input type="text" id="mevcutFiyat" placeholder="Örn: 400" oninput="fmtIn(this)"></div></div>
 <div class="bg"><button class="cb p" onclick="hesaplaGramaj()">HESAPLA</button><button class="xb" onclick="temizle(['mevcutMiktar','mevcutFiyat'],['kiloSK','gramSK'],'0,00 TL')">C</button></div>
 <div class="rc"><label>1 Kilogram Fiyatı</label><div class="rb" id="kiloSK">0,00 TL</div><label>1 Gram / 1 Adet</label><div class="rb dm" id="gramSK">0,00 TL</div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Gramaj / Birim Fiyat</b><span class="fx">1 Gram Fiyatı = Toplam Fiyat ÷ Miktar</span><span class="fx">1 Kilogram Fiyatı = (Toplam Fiyat ÷ Miktar) × 1000</span><span class="fx">Örnek: 400 TL ÷ 700 gr = 0,5714 TL/gr</span><span class="fo">0,5714 × 1000 = 571,43 TL/kg</span><span class="fx">Ters kullanım: Miktar = Toplam Fiyat ÷ Gram Fiyatı</span><span class="fo">Adet fiyatı belli ise kaç adet aldığını bulursun.</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -205,6 +184,8 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="fg"><label>Artış Oranı (%)</label><input type="text" id="artisOrani" placeholder="Örn: 20" oninput="fmtIn(this)"></div>
 <div class="bg"><button class="cb pu" onclick="hesaplaYuzdeArtis()">HESAPLA</button><button class="xb" onclick="temizle(['artisAnaVeri','artisOrani'],['artisSK','artisFK'],'0,00')">C</button></div>
 <div class="rc"><label>Yeni Toplam Değer</label><div class="rb" id="artisSK">0,00</div><label>Eklenen Zam Miktarı</label><div class="rb dm" id="artisFK">0,00</div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 % Artış (Zam)</b><span class="fx">Yeni Fiyat = Ana Fiyat × (1 + Oran ÷ 100)</span><span class="fx">Zam Miktarı = Yeni Fiyat − Ana Fiyat</span><span class="fx">Örnek: 500 × (1 + 20÷100) = 600 TL</span><span class="fo">Zam miktarı 100 TL</span><span class="fx">Ters kullanım: Oran (%) = (Yeni ÷ Ana − 1) × 100</span><span class="fo">Zam oranını geriye doğru bulmak için.</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -216,6 +197,8 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="fg"><label>KDV Oranı</label><select id="kdvOrani"><option value="20">%20 (Genel Hizmet)</option><option value="10">%10 (Gıda / Tekstil)</option><option value="1">%1 (Temel Gıda)</option></select></div>
 <div class="bg"><button class="cb s" onclick="hesaplaKdv(true)">KDV EKLE</button><button class="cb w" onclick="hesaplaKdv(false)">KDV ÇIKAR</button><button class="xb" onclick="temizle(['kdvTutar'],['kdvSK','kdvVK'],'0,00 TL')">C</button></div>
 <div class="rc"><label>Sonuç Tutar</label><div class="rb" id="kdvSK">0,00 TL</div><label>KDV Vergisi</label><div class="rb dm" id="kdvVK">0,00 TL</div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 KDV Ekle / Çıkar</b><span class="fx">KDV Ekle: Sonuç = Tutar × (1 + Oran ÷ 100)</span><span class="fo">KDV hariç fiyattan KDV dahil fiyata geçiş.</span><span class="fx">KDV Çıkar: Sonuç = Tutar ÷ (1 + Oran ÷ 100)</span><span class="fo">KDV dahil fiyattan hariç fiyata geçiş.</span><span class="fx">KDV Vergisi = Sonuç − Giriş (eklemede) | Giriş − Sonuç (çıkarmada)</span><span class="fx">Örnek: 1000 TL + %20 → 1200 TL, KDV 200 TL</span><span class="fo">1200 ÷ 1,20 = 1000 TL geri döner.</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -227,6 +210,8 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="fg"><label>İndirim Oranı (%)</label><input type="text" id="indirimOrani" placeholder="Örn: 15" oninput="fmtIn(this)"></div>
 <div class="bg"><button class="cb p" onclick="hesaplaIndirim()">FİYATI BUL</button><button class="xb" onclick="temizle(['indirimFiyat','indirimOrani'],['indirimSK','indirimTK'],'0,00 TL')">C</button></div>
 <div class="rc"><label>İndirimli Fiyat</label><div class="rb" id="indirimSK" style="color:var(--suc)">0,00 TL</div><label>İndirim Miktarı</label><div class="rb dm" id="indirimTK" style="color:var(--dng)">0,00 TL</div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 % İndirim</b><span class="fx">İndirimli Fiyat = Normal Fiyat × (1 − Oran ÷ 100)</span><span class="fx">İndirim Miktarı = Normal Fiyat − İndirimli Fiyat</span><span class="fx">Örnek: 200 TL, %15 indirim → 170 TL</span><span class="fo">İndirim miktarı 30 TL</span><span class="fx">Ters kullanım: Oran (%) = (1 − İndirimli ÷ Normal) × 100</span><span class="fo">Etiketteki indirimi doğrulamak için.</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 <!-- DÖVİZ -->
@@ -241,6 +226,8 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="dyt"><button class="dyb ag2" id="yonBtnTL" onclick="setDovizYon('tl')">💱 Dövizi TL'ye</button><button class="dyb" id="yonBtnDoviz" onclick="setDovizYon('doviz')">🇹🇷 TL'yi Dövize</button></div>
 <div class="bg"><button class="cb p" onclick="hesaplaDoviz()">HESAPLA</button><button class="xb" onclick="temizle(['dovizMiktar'],['dovizSK'],'0,00')">C</button></div>
 <div class="rc"><label>Karşılığı</label><div class="rb" id="dovizSK">0,00</div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Döviz Kuru</b><span class="fx">Döviz → TL: Sonuç = Miktar × Kur</span><span class="fo">Döviz miktarını kur ile çarparsın.</span><span class="fx">TL → Döviz: Sonuç = Miktar ÷ Kur</span><span class="fo">TL miktarını kura bölersin.</span><span class="fx">Kur = 1 birim yabancı paranın TL karşılığı</span><span class="fx">Dövizi TL ye çevirirken SATIŞ, TL yi dövize çevirirken ALIŞ kuru kullanılır.</span><span class="fo">Bankanın senden aldığı/sana sattığı fiyat farkı makas olarak yansır.</span><span class="fx">Örnek: 100 USD × 42,10 = 4.210 TL</span><span class="fo"></span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -255,6 +242,8 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="dyt"><button class="dyb ag2" id="altinYonSatis" onclick="setAltinYon('satis')">🪙 Altın SATIYORUM</button><button class="dyb" id="altinYonAlis" onclick="setAltinYon('alis')">🪙 Altın ALIYORUM</button></div>
 <div class="bg"><button class="cb p" onclick="hesaplaAltin()">HESAPLA</button><button class="xb" onclick="temizle(['altinMiktar'],['altinSK'],'0,00 TL')">C</button></div>
 <div class="rc"><label id="altinSonucLabel">Alacağınız TL Tutarı</label><div class="rb hg" id="altinSK">0,00 TL</div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Altın Alış / Satış</b><span class="fx">Has Gram (TL) = Ons ($) × Dolar Kuru ÷ 31,1035</span><span class="fx">Kuyumcu Alış (sen satıyorsun) = Has Gram × 0,99</span><span class="fx">Kuyumcu Satış (sen alıyorsun) = Has Gram × 1,02</span><span class="fx">Adet Fiyatı = Gram Fiyatı × Has Gram Miktarı</span><span class="fo">Çeyrek 1,75 gr · Yarım 3,50 gr · Tam ve Ata 7,00 gr</span><span class="fx">Toplam Tutar = Adet Fiyatı × Miktar</span><span class="fx">Örnek: Ons 4100 $, kur 41,50 → Has 5.470 TL → Çeyrek satış ≈ 9.765 TL</span><span class="fo">İşçilik farkı 0,99 / 1,02 katsayısı içindedir.</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -274,6 +263,8 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div id="maasBlogu" style="display:none"><label id="hesMaasLabel">Hesaplanan Net Maaş</label><div class="rb hb" id="proMaas">0,00 TL</div></div>
 <div id="tazminatBlogu"><label>Kıdem Tazminatı (Net)</label><div class="rb" id="proKidem" style="color:var(--suc)">0,00 TL</div><label>İhbar Tazminatı (Net)</label><div class="rb" id="proIhbar" style="color:var(--wrn)">0,00 TL</div>
 <label style="border-top:1px dashed var(--cb);padding-top:8px;margin-top:6px;font-weight:800;color:var(--txt)">Tazminat Genel Toplamı (Net)</label><div class="rb hl" id="proGenel">0,00 TL</div></div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Maaş ve Tazminat</b><span class="fx">Brüt → Net: Net = Brüt − SGK − Gelir Vergisi − Damga</span><span class="fo">SGK çalışan payı %15 (14 SGK + 1 işsizlik), damga %0,759</span><span class="fx">Net → Brüt: Brüt, net sonucu tutana kadar iteratif aranır</span><span class="fo">Yaklaşık %35 brüt/net oranından başlar, 60 adımda yakınsar.</span><span class="fx">Gelir Vergisi kademeli: %15 / %20 / %27 / %35 / %40</span><span class="fo">Kümülatif matrah arttıkça üst dilime geçer.</span><span class="fx">Kıdem = Giydirilmiş Brüt ÷ 30 × 35,05 × Yıl</span><span class="fo">Giydirilmiş brüt = aylık brüt + ek ödemeler</span><span class="fx">İhbar = Günlük Brüt × İhbar Günü</span><span class="fo">6 aydan az 2, 1,5 yıla kadar 4, 3 yıla kadar 6, 5 yıla kadar 8, sonrası 12 gün</span><span class="fx">Toplam = Kıdem (net) + İhbar (net)</span><span class="fo"></span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -291,9 +282,10 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="fg"><label>Yakıt Litre Fiyatı (TL)</label><input type="text" id="yolYakitFiyat" placeholder="Örn: 43,50" oninput="fmtIn(this);hesaplaHizYakit()"></div></div>
 <div class="bg"><button class="cb p" onclick="hesaplaHizYakit()">YOL MALİYETİNİ HESAPLA</button><button class="xb" onclick="temizleHizYakit()">C</button></div>
 <div class="rc"><label>Tahmini Varış Süresi</label><div class="rb" id="yolSure" style="color:var(--pri)">0 Saat, 0 Dakika</div><label>Toplam Yakıt</label><div class="rb dm" id="yolLitre">0,00 Litre</div><label style="font-weight:800;color:var(--txt)">Toplam Yakıt Maliyeti</label><div class="rb hg" id="yolMaliyet">0,00 TL</div></div>
+<button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
+<div class="fmx"><b>📐 Yol ve Yakıt</b><span class="fx">Süre (saat) = Mesafe ÷ Ortalama Hız</span><span class="fx">Yakıt (Litre) = Mesafe × Tüketim ÷ 100</span><span class="fx">Maliyet = Litre × Litre Fiyatı</span><span class="fx">Örnek: 500 km × 6 L/100km = 30 L</span><span class="fo">30 × 43,50 = 1.305 TL</span><span class="fx">Mesafe otomatik: kuş uçuşu × 1,3 katsayısı</span><span class="fo">Adres arama sonucu yol mesafesine yaklaştırılır.</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
-
 
 <!-- YAKIT KARŞILAŞTIRMA -->
 <div id="yakitKH" class="pp">
@@ -318,7 +310,7 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <label id="ykFarkLabel">Fark</label><div class="rb hl" id="ykFark">0,00 TL</div>
 </div>
 <button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - Yakıt Karşılaştırma</b><span class="fx">Yakıt (L) = Mesafe × Tüketim / 100</span><span class="fx">Maliyet = Litre × Litre Fiyatı</span><span class="fo">Gidiş-dönüş açıksa mesafe 2 ile çarpılır.</span><span class="fx">Kişi Başı = Toplam Maliyet / Kişi Sayısı</span><span class="fx">Fark = Alternatif − Kendi Aracın</span><span class="fo">Pozitif fark: kendi araban daha ekonomik.</span></div>
+<div class="fmx"><b>📐 Yakıt Karşılaştırma</b><span class="fx">Yakıt (L) = Mesafe × Tüketim ÷ 100</span><span class="fx">Maliyet = Litre × Litre Fiyatı</span><span class="fx">Gidiş-dönüş açıksa mesafe 2 ile çarpılır</span><span class="fo"></span><span class="fx">Kişi Başı = Toplam Maliyet ÷ Kişi Sayısı</span><span class="fx">Fark = Alternatif − Kendi Aracın</span><span class="fo">Pozitif fark: kendi araban daha ekonomik</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 
@@ -340,7 +332,7 @@ body.bigmode .gc,body.bigmode .pp{max-width:560px}
 <div class="rc"><label>Sonuç</label><div class="rb hl" id="bcSK">1</div></div>
 <div id="bcTablo" style="margin-top:10px"></div>
 <button class="fmb" onclick="toggleFormula(this)">📐 Formülü Göster</button>
-<div class="fmx"><b>📐 Formül - Birim Çevirme</b><span class="fx">Sonuç = Miktar × (Kaynak Katsayı / Hedef Katsayı)</span><span class="fo">Her birim gram, litre, metre veya m² cinsinden katsayıya çevrilir.</span><span class="fx">Sıcaklık: °C = (°F − 32) / 1,8  -  °F = °C × 1,8 + 32</span><span class="fx">Örnek: 1 ons = 31,1035 gram → 5 ons = 155,52 gram</span></div>
+<div class="fmx"><b>📐 Birim Çevirme</b><span class="fx">Sonuç = Miktar × (Kaynak Katsayı ÷ Hedef Katsayı)</span><span class="fx">Katsayılar gram, litre, metre ve m² cinsindendir</span><span class="fo">Örn: 1 kg = 1000 gr, 1 ons = 31,1035 gr</span><span class="fx">Sıcaklık: °C = (°F − 32) ÷ 1,8 | °F = °C × 1,8 + 32</span><span class="fx">Örnek: 5 ons altın = 5 × 31,1035 = 155,52 gr</span><span class="fo">1 kg = 32,1507 ons altın</span></div>
 <button class="oct" onclick="toggleCalc(true)">🧮 Hesap Makinesi</button>
 </div>
 </div>
@@ -826,6 +818,18 @@ function updateIosDisplay(){
 function toggleFormula(btn){
   var box=btn.nextElementSibling;
   if(!box||!box.classList.contains('fmx'))return;
+  if(document.body.classList.contains('allfm')){
+    document.body.classList.remove('allfm');
+    try{localStorage.setItem('hp_allfm','0');}catch(e){}
+    var gb=document.getElementById('allFmBtn');
+    if(gb){gb.className='ttb';gb.textContent='📐 Tüm Formüller';}
+    var bt2=document.querySelectorAll('.fmb');
+    for(var q=0;q<bt2.length;q++){bt2[q].textContent='📐 Formülü Göster';}
+    box.classList.add('show');box.style.display='block';
+    btn.textContent='📐 Formülü Gizle';
+    try{box.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
+    return;
+  }
   var open=!box.classList.contains('show');
   if(open){box.classList.add('show');box.style.display='block';}
   else{box.classList.remove('show');box.style.display='none';}
@@ -933,11 +937,21 @@ function toggleBigMode(){
   try{localStorage.setItem('hp_big',on?'1':'0');}catch(e){}
 }
 
+function toggleAllFormulas(){
+  var on=document.body.classList.toggle('allfm');
+  try{localStorage.setItem('hp_allfm',on?'1':'0');}catch(e){}
+  var b=document.getElementById('allFmBtn');
+  if(b){b.className='ttb'+(on?' on':'');b.textContent=on?'📐 Formüller Açık':'📐 Tüm Formüller';}
+  var btns=document.querySelectorAll('.fmb');
+  for(var i=0;i<btns.length;i++){btns[i].textContent=on?'📐 Formülü Gizle':'📐 Formülü Göster';}
+  if(!on){var boxes=document.querySelectorAll('.fmx.show');for(var j=0;j<boxes.length;j++){boxes[j].classList.remove('show');boxes[j].style.display='';}}
+}
 function toggleCalc(show){document.getElementById('calcOverlay').style.display=show?'flex':'none';}
 
 initDateSelectors();
 setAltinYon('satis');
 bcKategoriDegisti();
+try{var _af=localStorage.getItem('hp_allfm');if(_af===null||_af==='1'){if(!document.body.classList.contains('allfm'))toggleAllFormulas();}}catch(e){}
 try{if(localStorage.getItem('hp_big')==='1'){document.body.classList.add('bigmode');var bb=document.getElementById('bigBtn');if(bb){bb.className='ttb on';bb.textContent='🔎 Büyük Yazı: AÇIK';}}}catch(e){}
 (async function(){
   await fetchLiveRates();
